@@ -2,9 +2,9 @@ var sinon                     = require('sinon');
 var chai                      = require('chai');
 var expect                    = chai.expect;
 var sinonChai                 = require("sinon-chai");
-var Validator                 = require('../../validator.js');
-var ValidatorError           = require('../../error/validatorError.js');
-var ValidationMultiError      = require('../../error/validationMultiError.js');
+var Validator                 = require('../../lib/validator.js');
+var ValidatorError           = require('../../lib/error/validatorError.js');
+var ValidationMultiError      = require('../../lib/error/validationMultiError.js');
 
 chai.use(sinonChai);
 chai.should();

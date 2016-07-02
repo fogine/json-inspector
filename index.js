@@ -1,13 +1,13 @@
 var stringValidator           = require('validator');
-var ValidationError           = require('./error/validationError.js');
-var ValidatorManager          = require('./validatorManager.js');
-var Validator                 = require('./validator.js');
-var expressMiddleware         = require('./expressMiddleware.js');
-var expressInjectorMiddleware = require('./expressInjectorMiddleware.js');
-var composeError              = require('./composeError.js');
-var assertions                = require('./assertions.js');
-var sanitizers                = require('./sanitizers.js');
-var conditions                = require('./conditions.js');
+var ValidationError           = require('./lib/error/validationError.js');
+var ValidatorManager          = require('./lib/validatorManager.js');
+var Validator                 = require('./lib/validator.js');
+var expressMiddleware         = require('./lib/expressMiddleware.js');
+var expressInjectorMiddleware = require('./lib/expressInjectorMiddleware.js');
+var composeError              = require('./lib/composeError.js');
+var assertions                = require('./lib/assertions.js');
+var sanitizers                = require('./lib/sanitizers.js');
+var conditions                = require('./lib/conditions.js');
 
 
 var validatorManager = new ValidatorManager;
@@ -32,7 +32,7 @@ module.exports.define = function(name, schema, options) {
 }
 
 
-module.exports.Validator            = require('./validator.js');
+module.exports.Validator            = Validator;
 module.exports.ValidatorManager     = ValidatorManager;
 module.exports.getExpressInjector   = expressInjectorMiddleware;
 module.exports.getExpressMiddleware = expressMiddleware;

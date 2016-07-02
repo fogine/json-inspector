@@ -3,8 +3,8 @@ var chai                = require('chai');
 var expect              = chai.expect;
 var sinonChai           = require("sinon-chai");
 var stringValidator     = require('validator');
-var htmlSanitizer       = require('../../htmlSanitizer.js');
-var sanitizers          = require('../../sanitizers.js');
+var htmlSanitizer       = require('../../lib/htmlSanitizer.js');
+var sanitizers          = require('../../lib/sanitizers.js');
 
 chai.use(sinonChai);
 chai.should();

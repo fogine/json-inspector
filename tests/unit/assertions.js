@@ -3,7 +3,7 @@ var chai                = require('chai');
 var expect              = chai.expect;
 var sinonChai           = require("sinon-chai");
 var stringValidator     = require('validator');
-var assertions          = require('../../assertions.js');
+var assertions          = require('../../lib/assertions.js');
 
 chai.use(sinonChai);
 chai.should();

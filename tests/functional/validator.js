@@ -1,10 +1,10 @@
 var chai                 = require('chai');
 var expect               = chai.expect;
-var Validator            = require('../../validator.js');
-var ValidatorManager     = require('../../validatorManager.js');
+var Validator            = require('../../lib/validator.js');
+var ValidatorManager     = require('../../lib/validatorManager.js');
 var index                = require('../../index.js');
-var ValidationError      = require('../../error/validationError.js');
-var ValidationMultiError = require('../../error/validationMultiError.js');
+var ValidationError      = require('../../lib/error/validationError.js');
+var ValidationMultiError = require('../../lib/error/validationMultiError.js');
 var define               = index.define;
 
 chai.should();
