@@ -1,0 +1,43 @@
+{
+  "name": "bi-validator",
+  "version": "1.0.0",
+  "author": {
+      "email": "fogine@opmbx.org"
+  },
+  "description": "complex yet simple validator",
+  "scripts": {
+      "unit-tests": "./node_modules/.bin/mocha --ui bdd --colors --check-leaks -t 5000 --reporter spec 'tests/unit/**/*.js'",
+      "tests": "./node_modules/.bin/mocha --ui bdd --colors --check-leaks -t 5000 --reporter spec 'tests/**/*.js'",
+      "coverage": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- --ui bdd -R spec 'tests/**/*.js' -t 5000"
+  },
+  "keywords": [
+    "validator",
+    "sanitizer",
+    "json",
+    "express",
+    "validation",
+    "validate",
+    "sanitize",
+    "sanitization",
+    "xss",
+    "schema",
+    "json-schema",
+    "json-schema-validator",
+    "json-schema-validation"
+  ],
+  "dependencies": {
+    "lodash": "^4.11.x",
+    "qs": "^6.2.0",
+    "sanitize-html": "^1.11.4",
+    "validator": "^5.2.0"
+  },
+  "license": "GPL v3",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "codeclimate-test-reporter": "^0.3.1",
+    "istanbul": "^0.4.3",
+    "mocha": "^2.4.5",
+    "sinon": "^1.17.3",
+    "sinon-chai": "^2.8.0"
+  }
+}
