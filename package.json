@@ -1,10 +1,10 @@
 {
-  "name": "bi-validator",
-  "version": "1.0.0",
+  "name": "json-inspector",
+  "version": "1.0.0-alpha",
   "author": {
       "email": "fogine@opmbx.org"
   },
-  "description": "complex yet simple validator",
+  "description": "Json Inspector is json data validator & sanitizer. It allows you to define validation rules for complex data structures by simple and descriptive way of defining json-compliant inspector schema.",
   "scripts": {
       "unit-tests": "./node_modules/.bin/mocha --ui bdd --colors --check-leaks -t 5000 --reporter spec 'tests/unit/**/*.js'",
       "tests": "./node_modules/.bin/mocha --ui bdd --colors --check-leaks -t 5000 --reporter spec 'tests/**/*.js'",
