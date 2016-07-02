@@ -27,8 +27,8 @@ Resources
 * [Getting Started]() (Comming soon)
 * [Documentation]() (Comming soon)
 * [Changelog](./CHANGELOG.md)
-* [Licence GPL v3](./LICENSE.md)
-* [Copyrigh](./COPYRIGHT.md)
+* [Licence GPL v3](./LICENSE)
+* [Copyrigh](./COPYRIGHT)
 
 Tests
 -------------------
