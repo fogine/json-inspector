@@ -2,11 +2,6 @@ language: node_js
 node_js:
 - "4.2.2"
 
-addons:
-    code_climate:
-        repo_token:
-            secure: ""
-
 script:
     - npm run-script tests
     - npm run-script coverage
