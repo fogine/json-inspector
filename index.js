@@ -1,5 +1,6 @@
 var stringValidator           = require('validator');
 var ValidationError           = require('./lib/error/validationError.js');
+var ValidationMultiError      = require('./lib/error/validationMultiError.js');
 var ValidatorManager          = require('./lib/validatorManager.js');
 var Validator                 = require('./lib/validator.js');
 var expressMiddleware         = require('./lib/expressMiddleware.js');
@@ -32,6 +33,9 @@ module.exports.define = function(name, schema, options) {
 }
 
 
+module.exports.Validator            = Validator;
+module.exports.ValidationError      = ValidationError;
+module.exports.ValidationMultiError = ValidationMultiError;
 module.exports.Validator            = Validator;
 module.exports.ValidatorManager     = ValidatorManager;
 module.exports.getExpressInjector   = expressInjectorMiddleware;
