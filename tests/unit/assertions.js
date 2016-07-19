@@ -2584,7 +2584,7 @@ describe('$iLike', function() {
             message: messageStub
         };
         var resolvedContext = assertions.$iLike.call(context);
-        messageStub.should.be.calledWith('$iLike', {attr: 'prop.path', format: '%test%'})
+        messageStub.should.be.calledWith('$iLike', {attr: 'prop.path', format: '%test%', negated: false})
 
         resolvedContext.message.should.be.equal('$iLike');
     })
@@ -2651,7 +2651,7 @@ describe('$notILike', function() {
             message: messageStub
         };
         var resolvedContext = assertions.$notILike.call(context);
-        messageStub.should.be.calledWith('not.$iLike', {attr: 'prop.path', format: '%invalid%'})
+        messageStub.should.be.calledWith('not.$iLike', {attr: 'prop.path', format: '%invalid%', negated: false})
 
         resolvedContext.message.should.be.equal('not.$iLike');
     })
