@@ -7,7 +7,7 @@ Currently only Node.js is supported. However Web browser support is on the roadm
 
 Installation
 ----------------------
-`npm install json-inspector`
+`npm install json-inspector@beta`
 
 
 
