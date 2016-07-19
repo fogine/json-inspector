@@ -377,7 +377,7 @@ describe('Validator', function() {
         data.bio.should.be.equal('');
     })
 
-    it('should respect `nullAsEmpty` option if set. null data values should be treated as if data would not be sent', function() {
+    it('should respect `nullable` option if set. null data values should be treated as if data would not be sent', function() {
 
         var schema = {
             description: { $isInt: undefined },
@@ -390,7 +390,7 @@ describe('Validator', function() {
             description: null,
             user: null
         };
-        var validator = new Validator(schema, {nullAsEmpty: true});
+        var validator = new Validator(schema, {nullable: true});
         validator.validate(data);
 
         validator.should.have.property('success', true);
