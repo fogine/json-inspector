@@ -26,12 +26,12 @@ Features
 Resources
 -------------------
 * [Getting Started](https://github.com/fogine/json-inspector/wiki/Getting-started)
-* [Documentation](https://github.com/fogine/json-inspector/wiki/Getting-started)
+* [Documentation](https://github.com/fogine/json-inspector/wiki/Schema-definition)
 * [Changelog](./CHANGELOG.md)
 * [Licence GPL v3](./LICENSE)
 * [Copyright](./COPYRIGHT)
 
-Simple schema example
+Simple schema definition example
 --------------------
 ```javascript
 inspector.define('user', {
