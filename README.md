@@ -31,6 +31,37 @@ Resources
 * [Licence GPL v3](./LICENSE)
 * [Copyright](./COPYRIGHT)
 
+Simple schema example
+--------------------
+```javascript
+inspector.define('user', {
+    username: {
+        $nullable: true,
+        $isAlphanumeric: 'en-US',
+        $hasLengthOf: {max: 32}
+    },
+    email: {
+        $required: true,
+        $isEmail: {allow_display_name: true}
+    },
+    address: {
+        street: {
+            $is: String
+        },
+        zip: {
+            $isInt: {min: 1}
+        }
+    },
+    apps: {
+        $forEach: {
+            name: {
+                $in: ['app1', 'app2']
+            }
+        }
+    }
+});
+```
+
 Tests
 -------------------
 
