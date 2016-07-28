@@ -233,7 +233,7 @@ describe('Validator', function() {
             }
         });
 
-        validator.error.message.should.be.equal('$isAlpha');
+        validator.error.message.should.be.equal('isAlpha');
     })
 
     it('should fail with proper validation error', function() {
