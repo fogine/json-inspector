@@ -5,6 +5,7 @@ var ValidatorManager     = require('../../lib/validatorManager.js');
 var index                = require('../../index.js');
 var ValidationError      = require('../../lib/error/validationError.js');
 var ValidationMultiError = require('../../lib/error/validationMultiError.js');
+var _                    = require('lodash');
 var define               = index.define;
 
 chai.should();
@@ -437,5 +438,130 @@ describe('module.define', function() {
         });
 
         validator.should.have.property('success', true);
+    })
+})
+
+describe('`keywordPrefix` option', function() {
+    before(function() {
+        this.schema = {
+            apps: {
+                '@forEach': {
+                    '@is': String,
+                    '@eq': {'@ref': 'app_name'}
+                },
+                '@hasLengthOf': {min: 1},
+                '@sanitize': function(apps) {
+                    return ['sanitized']
+                }
+            },
+            app_name: {
+                '@eq': 'test'
+            },
+            username: {
+                '@or': [
+                {
+                    '@in': ['username1', 'username2']
+                },
+                {
+                    '@eq': 'username3'
+                }
+                ]
+            },
+            data: {
+                '@nullable': true,
+                '@is': String
+            },
+            opt: {
+                '@required': false,
+                '@is': Object
+            }
+        };
+    });
+
+    it('should properly recognize `keywordPrefix` => all tests should PASS', function() {
+
+        var data = [
+            {
+                apps: ['test', 'test'],
+                app_name: 'test',
+                username: 'username3',
+                data: null
+            },
+            {
+                apps: ['test'],
+                app_name: 'test',
+                username: 'username2',
+                data: 'valid'
+            },
+            {
+                apps: ['test'],
+                app_name: 'test',
+                username: 'username2',
+                data: 'valid',
+                opt: {}
+            },
+        ];
+
+        var validator = new Validator(this.schema, {keywordPrefix: '@'});
+
+        data.forEach(function(val) {
+            var dataBckup = _.cloneDeep(val);
+            dataBckup.apps = ['sanitized'];
+
+            validator.validate(val);
+
+            validator.should.have.property('success', true, validator.error);
+            validator.should.have.property('error', null);
+            val.should.be.eql(dataBckup);
+        })
+    })
+
+    it('should properly recognize `keywordPrefix` => all tests should FAIL', function() {
+
+        var data = [
+            {
+                apps: ['test', 'invalid-value'],
+                app_name: 'test',
+                username: 'username3',
+                data: null
+            },
+            {
+                apps: ['test'],
+                app_name: 'invalid',
+                username: 'username2',
+                data: 'valid'
+            },
+            {
+                apps: ['test'],
+                app_name: 'test',
+                username: 'invalid',
+                data: 'valid'
+            },
+            {
+                apps: ['test'],
+                app_name: 'test',
+                username: 'username2',
+                data: ['invalid']
+            },
+            {
+                apps: ['test'],
+                app_name: 'test',
+                username: 'username2',
+                data: null,
+                opt: 'invalid'
+            },
+        ];
+
+        var validator = new Validator(this.schema, {keywordPrefix: '@'});
+
+        data.forEach(function(val) {
+            var dataBckup = _.cloneDeep(val);
+
+            validator.validate(val);
+
+            validator.should.have.property('success', false, validator.error);
+            validator.should.have.property('error').which.is.instanceof(Error);//can be ValidationError / ValidationMultiError
+            val.should.be.eql(dataBckup);
+        })
     })
 })
