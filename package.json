@@ -10,10 +10,12 @@
     "unit-tests": "./node_modules/.bin/mocha --ui bdd --colors --check-leaks -t 5000 --reporter spec 'tests/unit/**/*.js'",
     "tests": "./node_modules/.bin/mocha --ui bdd --colors --check-leaks -t 5000 --reporter spec 'tests/**/*.js'",
     "coverage": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- --ui bdd -R spec 'tests/**/*.js' -t 5000",
-    "buildLodash": "lodash include=isPlainObject,assign,get,union,set,merge,cloneDeep,mergeWith,defaults,flattenDeep,assign -c > /tmp/lodash.min.js",
-    "browserify": "browserify index.js > json-inspector.min.js -x lodash -r /tmp/lodash.min.js",
-    "uglify": "uglify -s json-inspector.min.js -o json-inspector.min.js",
-    "build": "npm run-script buildLodash && npm run-script browserify && npm run-script uglify"
+    "prepareBuildDeps": "mv ./node_modules/lodash ./node_modules/lodash_bck && mkdir ./node_modules/lodash && cp ./node_modules/lodash_bck/package.json ./node_modules/lodash/package.json",
+    "clearBuildDeps": "rm -f ./node_modules/lodash/*.* && rm -d ./node_modules/lodash && mv ./node_modules/lodash_bck ./node_modules/lodash",
+    "buildLodash": "lodash include=isPlainObject,assign,get,union,set,merge,cloneDeep,mergeWith,defaults,flattenDeep,assign -c > ./node_modules/lodash/lodash.js",
+    "browserify": "browserify index.js -i ./lib/expressMiddleware.js -i ./lib/expressInjectorMiddleware.js  --standalone JsonInspector > ./dist/json-inspector.js",
+    "uglify": "uglify -s ./dist/json-inspector.js -o ./dist/json-inspector.min.js",
+    "build": "npm run prepareBuildDeps && npm run-script buildLodash && npm run-script browserify && npm run-script uglify && npm run clearBuildDeps"
   },
   "keywords": [
     "validator",
