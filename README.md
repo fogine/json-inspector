@@ -8,7 +8,11 @@ Installation
 ----------------------
 `npm install json-inspector@beta`  
 
-`bower install json-inspector`
+ or  
+
+`bower install json-inspector`  
+
+... or you can `browserify` your own bundle for a browser, see `npm run-script build` in the `package.json`
 
 
 Features
