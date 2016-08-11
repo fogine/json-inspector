@@ -6,7 +6,7 @@ Json Inspector is json data validator & sanitizer. It allows you to define valid
 
 Installation
 ----------------------
-`npm install json-inspector@beta`  
+`npm install json-inspector`  
 
  or  
 
