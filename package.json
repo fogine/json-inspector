@@ -2,13 +2,20 @@
   "name": "json-inspector",
   "version": "1.0.0-beta",
   "author": {
-      "email": "fogine@opmbx.org"
+    "email": "fogine@opmbx.org"
   },
+  "license": "GPL-3.0",
   "description": "Json Inspector is json data validator & sanitizer. It allows you to define validation rules for complex data structures by simple and descriptive way of defining json-compliant inspector schema.",
   "scripts": {
-      "unit-tests": "./node_modules/.bin/mocha --ui bdd --colors --check-leaks -t 5000 --reporter spec 'tests/unit/**/*.js'",
-      "tests": "./node_modules/.bin/mocha --ui bdd --colors --check-leaks -t 5000 --reporter spec 'tests/**/*.js'",
-      "coverage": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- --ui bdd -R spec 'tests/**/*.js' -t 5000"
+    "unit-tests": "./node_modules/.bin/mocha --ui bdd --colors --check-leaks -t 5000 --reporter spec 'tests/unit/**/*.js'",
+    "tests": "./node_modules/.bin/mocha --ui bdd --colors --check-leaks -t 5000 --reporter spec 'tests/**/*.js'",
+    "coverage": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- --ui bdd -R spec 'tests/**/*.js' -t 5000",
+    "prepareBuildDeps": "mv ./node_modules/lodash ./node_modules/lodash_bck && mkdir ./node_modules/lodash && cp ./node_modules/lodash_bck/package.json ./node_modules/lodash/package.json",
+    "clearBuildDeps": "rm -f ./node_modules/lodash/*.* && rm -d ./node_modules/lodash && mv ./node_modules/lodash_bck ./node_modules/lodash",
+    "buildLodash": "lodash include=isPlainObject,assign,get,union,set,merge,cloneDeep,mergeWith,defaults,flattenDeep,assign -c > ./node_modules/lodash/lodash.js",
+    "browserify": "browserify index.js -i ./lib/expressMiddleware.js -i ./lib/expressInjectorMiddleware.js  --standalone JsonInspector > ./dist/json-inspector.js",
+    "uglify": "uglify -s ./dist/json-inspector.js -o ./dist/json-inspector.min.js",
+    "build": "npm run prepareBuildDeps && npm run-script buildLodash && npm run-script browserify && npm run-script uglify && npm run clearBuildDeps"
   },
   "keywords": [
     "validator",
@@ -31,13 +38,15 @@
     "sanitize-html": "^1.11.4",
     "validator": "^5.2.0"
   },
-  "license": "GPL-3.0",
   "devDependencies": {
+    "browserify": "^13.1.0",
     "chai": "^3.5.0",
     "codeclimate-test-reporter": "^0.3.1",
     "istanbul": "^0.4.3",
+    "lodash-cli": "^4.14.1",
     "mocha": "^2.4.5",
     "sinon": "^1.17.3",
-    "sinon-chai": "^2.8.0"
+    "sinon-chai": "^2.8.0",
+    "uglify": "^0.1.5"
   }
 }

@@ -1,6 +1,7 @@
 #### FUTURE
 
 * [ADDED] `keywordPrefix` validator option - makes it possible to change default schema definition keyword prefix (`$`)
+* [ADDED] Browser support
 
 #### v1.0.0-beta
 

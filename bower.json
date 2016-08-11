@@ -1,0 +1,48 @@
+{
+  "name": "json-inspector",
+  "main": "dist/json-inspector.js",
+  "version": "1.0.0-beta",
+  "homepage": "https://github.com/fogine/json-inspector",
+  "authors": [
+    "fogine <fogine@opmbx.org>"
+  ],
+  "description": "Json Inspector is powerful, yet easy to use json data validator & sanitizer.",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "validator",
+    "sanitizer",
+    "json",
+    "express",
+    "validation",
+    "validate",
+    "sanitize",
+    "sanitization",
+    "xss",
+    "schema",
+    "json-schema",
+    "json-schema-validator",
+    "json-schema-validation"
+  ],
+  "license": "GPL-3.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "*.vim",
+    "tutorials/",
+    ".tern-project",
+    ".travis.yml",
+    "deploy.sh",
+    "deploy_key.enc",
+    "docs/**",
+    "coverage/",
+    "npm-debug.log",
+    ".jsdoc.json"
+  ]
+}
