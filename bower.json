@@ -34,6 +34,15 @@
     "bower_components",
     "test",
     "tests",
-    "*.vim"
+    "*.vim",
+    "tutorials/",
+    ".tern-project",
+    ".travis.yml",
+    "deploy.sh",
+    "deploy_key.enc",
+    "docs/**",
+    "coverage/",
+    "npm-debug.log",
+    ".jsdoc.json"
   ]
 }
