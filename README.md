@@ -3,12 +3,12 @@
 [![Build Status](https://travis-ci.org/fogine/json-inspector.svg?branch=master)](https://travis-ci.org/fogine/json-inspector)  [![Test Coverage](https://codeclimate.com/github/fogine/json-inspector/badges/coverage.svg)](https://codeclimate.com/github/fogine/json-inspector/coverage)  
 
 Json Inspector is json data validator & sanitizer. It allows you to define validation rules for complex data structures by simple and descriptive way of defining json-compliant inspector schema.  
-Currently only Node.js is supported. However Web browser support is on the roadmap.
 
 Installation
 ----------------------
-`npm install json-inspector@beta`
+`npm install json-inspector@beta`  
 
+`bower install json-inspector`
 
 
 Features
