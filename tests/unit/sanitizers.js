@@ -9,7 +9,7 @@ var sanitizers          = require('../../lib/sanitizers.js');
 chai.use(sinonChai);
 chai.should();
 
-describe('$escape', function() {
+describe('escape', function() {
     it('should call external unescape & escape sanitizer method for every data entity in provided data structure', function() {
 
         var escapeSpy = sinon.spy(stringValidator, 'escape');
@@ -24,17 +24,17 @@ describe('$escape', function() {
         };
 
         //sanitize data
-        var sanitizedStr = sanitizers.$escape.call({
+        var sanitizedStr = sanitizers.escape.call({
             val: dataStr
         });
         escapeSpy.should.have.callCount(1);
 
-        var sanitizedObj = sanitizers.$escape.call({
+        var sanitizedObj = sanitizers.escape.call({
             val: dataObj
         });
         escapeSpy.should.have.callCount(4);
 
-        var sanitizedArr = sanitizers.$escape.call({
+        var sanitizedArr = sanitizers.escape.call({
             val: [dataStr]
         });
         escapeSpy.should.have.callCount(5);
@@ -50,7 +50,7 @@ describe('$escape', function() {
     });
 })
 
-describe('$sanitizeHtml', function() {
+describe('sanitizeHtml', function() {
     it('should call external `sanitizeHtml` sanitizer method for every data entity in provided data structure', function() {
         var htmlSanitizerSpy = sinon.spy(htmlSanitizer, 'sanitize');
 
@@ -64,17 +64,17 @@ describe('$sanitizeHtml', function() {
         };
 
         //sanitize data
-        var sanitizedStr = sanitizers.$sanitizeHtml.call({
+        var sanitizedStr = sanitizers.sanitizeHtml.call({
             val: dataStr
         });
         htmlSanitizerSpy.should.have.callCount(1);
 
-        var sanitizedObj = sanitizers.$sanitizeHtml.call({
+        var sanitizedObj = sanitizers.sanitizeHtml.call({
             val: dataObj
         });
         htmlSanitizerSpy.should.have.callCount(4);
 
-        var sanitizedArr = sanitizers.$sanitizeHtml.call({
+        var sanitizedArr = sanitizers.sanitizeHtml.call({
             val: [dataStr]
         });
         htmlSanitizerSpy.should.have.callCount(5);

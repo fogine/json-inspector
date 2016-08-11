@@ -8,22 +8,22 @@ var assertions          = require('../../lib/assertions.js');
 chai.use(sinonChai);
 chai.should();
 
-describe('$is', function() {
+describe('is', function() {
     it('should check for plain object', function() {
         var context = {
             filter: Object,
             val: {test: 'val'}
         };
 
-        var resolvedContext = assertions.$is.call(context);
+        var resolvedContext = assertions.is.call(context);
         resolvedContext.should.have.property('success', true);
 
         context.filter = 'Object';
-        resolvedContext = assertions.$is.call(context);
+        resolvedContext = assertions.is.call(context);
         resolvedContext.should.have.property('success', true);
 
         context.val = new String('test');
-        resolvedContext = assertions.$is.call(context);
+        resolvedContext = assertions.is.call(context);
         resolvedContext.should.have.property('success', false);
     })
 
@@ -33,19 +33,19 @@ describe('$is', function() {
             val: ['test', 1]
         };
 
-        var resolvedContext = assertions.$is.call(context);
+        var resolvedContext = assertions.is.call(context);
         resolvedContext.should.have.property('success', true);
 
         context.filter = 'Array';
-        resolvedContext = assertions.$is.call(context);
+        resolvedContext = assertions.is.call(context);
         resolvedContext.should.have.property('success', true);
 
         context.val = {test: 1};
-        resolvedContext = assertions.$is.call(context);
+        resolvedContext = assertions.is.call(context);
         resolvedContext.should.have.property('success', false);
 
         context.val = 'test';
-        resolvedContext = assertions.$is.call(context);
+        resolvedContext = assertions.is.call(context);
         resolvedContext.should.have.property('success', false);
     })
 
@@ -55,23 +55,23 @@ describe('$is', function() {
             val: 'teststring'
         };
 
-        var resolvedContext = assertions.$is.call(context);
+        var resolvedContext = assertions.is.call(context);
         resolvedContext.should.have.property('success', true);
 
         context.filter = 'String';
-        resolvedContext = assertions.$is.call(context);
+        resolvedContext = assertions.is.call(context);
         resolvedContext.should.have.property('success', true);
 
         context.val = new String('test');
-        resolvedContext = assertions.$is.call(context);
+        resolvedContext = assertions.is.call(context);
         resolvedContext.should.have.property('success', true);
 
         context.val = 1;
-        resolvedContext = assertions.$is.call(context);
+        resolvedContext = assertions.is.call(context);
         resolvedContext.should.have.property('success', false);
 
         context.val = {test: '42'};
-        resolvedContext = assertions.$is.call(context);
+        resolvedContext = assertions.is.call(context);
         resolvedContext.should.have.property('success', false);
 
     })
@@ -82,23 +82,23 @@ describe('$is', function() {
             val: 2
         };
 
-        var resolvedContext = assertions.$is.call(context);
+        var resolvedContext = assertions.is.call(context);
         resolvedContext.should.have.property('success', true);
 
         context.filter = 'Number';
-        resolvedContext = assertions.$is.call(context);
+        resolvedContext = assertions.is.call(context);
         resolvedContext.should.have.property('success', true);
 
         context.val = new Number(3);
-        resolvedContext = assertions.$is.call(context);
+        resolvedContext = assertions.is.call(context);
         resolvedContext.should.have.property('success', true);
 
         context.val = '3';
-        resolvedContext = assertions.$is.call(context);
+        resolvedContext = assertions.is.call(context);
         resolvedContext.should.have.property('success', false);
 
         context.val = {test: 3};
-        resolvedContext = assertions.$is.call(context);
+        resolvedContext = assertions.is.call(context);
         resolvedContext.should.have.property('success', false);
 
 
@@ -110,61 +110,61 @@ describe('$is', function() {
             val: null
         };
 
-        var resolvedContext = assertions.$is.call(context);
+        var resolvedContext = assertions.is.call(context);
         resolvedContext.should.have.property('success', true);
 
         context.val = 1;
-        resolvedContext = assertions.$is.call(context);
+        resolvedContext = assertions.is.call(context);
         resolvedContext.should.have.property('success', false);
 
         context.val = 'null';
-        resolvedContext = assertions.$is.call(context);
+        resolvedContext = assertions.is.call(context);
         resolvedContext.should.have.property('success', false);
 
         context.val = false;
-        resolvedContext = assertions.$is.call(context);
+        resolvedContext = assertions.is.call(context);
         resolvedContext.should.have.property('success', false);
 
         context.val = {test: '42'};
-        resolvedContext = assertions.$is.call(context);
+        resolvedContext = assertions.is.call(context);
         resolvedContext.should.have.property('success', false);
     })
 
     it('should support a function as `message` option value', function() {
-        var resolvedContext = assertions.$is.call({
+        var resolvedContext = assertions.is.call({
             filter: null,
             val: 'invalid',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$isNull');
+                assertionType.should.be.equal('isNull');
                 context.type.should.be.equal('null');
                 return assertionType;
             }
         });
-        resolvedContext.message.should.be.equal('$isNull');
+        resolvedContext.message.should.be.equal('isNull');
 
 
-        resolvedContext = assertions.$is.call({
+        resolvedContext = assertions.is.call({
             filter: Number,
             val: 'invalid',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$is');
+                assertionType.should.be.equal('is');
                 context.type.should.be.equal('Number');
                 return assertionType;
             }
         });
-        resolvedContext.message.should.be.equal('$is');
+        resolvedContext.message.should.be.equal('is');
 
 
-        resolvedContext = assertions.$is.call({
+        resolvedContext = assertions.is.call({
             filter: Object,
             val: 'invalid',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$is');
+                assertionType.should.be.equal('is');
                 context.type.should.be.equal('Object');
                 return assertionType;
             }
         });
-        resolvedContext.message.should.be.equal('$is');
+        resolvedContext.message.should.be.equal('is');
     })
 
     it('should throw an error when unsupported filter option is given', function() {
@@ -181,14 +181,14 @@ describe('$is', function() {
 
         invalid.forEach(function(testVal, i) {
             function test() {
-                assertions.$is.call(testVal);
+                assertions.is.call(testVal);
             }
             expect(test).to.throw(Error);
         });
     })
 })
 
-describe('$isAfter', function() {
+describe('isAfter', function() {
     beforeEach(function() {
         this.spy = sinon.spy(stringValidator, 'isAfter');
     });
@@ -204,7 +204,7 @@ describe('$isAfter', function() {
             val: '2016-09-02'
         };
 
-        var resolvedContext = assertions.$isAfter.call(context);
+        var resolvedContext = assertions.isAfter.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.have.been.calledWithExactly(context.val, context.filter);
@@ -216,41 +216,41 @@ describe('$isAfter', function() {
             filter: '2016-10-02',
             val: '2016-09-02',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$isAfter');
+                assertionType.should.be.equal('isAfter');
                 context.date.should.be.equal('2016-10-02');
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$isAfter.call(context);
+        var resolvedContext = assertions.isAfter.call(context);
 
-        resolvedContext.message.should.be.equal('$isAfter');
+        resolvedContext.message.should.be.equal('isAfter');
     })
 
     it('should replace falsy filter value with `undefined` on extarnal validator method call', function() {
 
-        shouldTransformFilterValueToUndefined('$isAfter', {
+        shouldTransformFilterValueToUndefined('isAfter', {
             filter: '',
             val: '2016-09-02'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isAfter', {
+        shouldTransformFilterValueToUndefined('isAfter', {
             filter: null,
             val: '2016-09-02'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isAfter', {
+        shouldTransformFilterValueToUndefined('isAfter', {
             filter:  0,
             val: '2016-09-02'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isAfter', {
+        shouldTransformFilterValueToUndefined('isAfter', {
             filter: false,
             val: '2016-09-02'
         }, this.spy);
     })
 })
 
-describe('$isAlpha', function() {
+describe('isAlpha', function() {
     beforeEach(function() {
         this.spy = sinon.spy(stringValidator, 'isAlpha');
     });
@@ -265,7 +265,7 @@ describe('$isAlpha', function() {
             val: 'abcd'
         };
 
-        var resolvedContext = assertions.$isAlpha.call(context);
+        var resolvedContext = assertions.isAlpha.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.have.been.calledWithExactly(context.val, context.filter);
@@ -277,40 +277,40 @@ describe('$isAlpha', function() {
             filter: 'en-US',
             val: '1nv4l1d',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$isAlpha');
+                assertionType.should.be.equal('isAlpha');
                 context.locale.should.be.equal('en-US');
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$isAlpha.call(context);
+        var resolvedContext = assertions.isAlpha.call(context);
 
-        resolvedContext.message.should.be.equal('$isAlpha');
+        resolvedContext.message.should.be.equal('isAlpha');
     })
 
     it('should replace falsy filter value with `undefined` on extarnal validator method call', function() {
-        shouldTransformFilterValueToUndefined('$isAlpha', {
+        shouldTransformFilterValueToUndefined('isAlpha', {
             filter: '',
             val: 'abcd'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isAlpha', {
+        shouldTransformFilterValueToUndefined('isAlpha', {
             filter:  null,
             val: 'abcd'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isAlpha', {
+        shouldTransformFilterValueToUndefined('isAlpha', {
             filter:  0,
             val: 'abcd'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isAlpha', {
+        shouldTransformFilterValueToUndefined('isAlpha', {
             filter: false,
             val: 'abcd'
         }, this.spy);
     })
 })
 
-describe('$isAlphanumeric', function() {
+describe('isAlphanumeric', function() {
     beforeEach(function() {
         this.spy = sinon.spy(stringValidator, 'isAlphanumeric');
     });
@@ -325,7 +325,7 @@ describe('$isAlphanumeric', function() {
             val: 'abcd123'
         };
 
-        var resolvedContext = assertions.$isAlphanumeric.call(context);
+        var resolvedContext = assertions.isAlphanumeric.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.have.been.calledWithExactly(context.val, context.filter);
@@ -337,40 +337,40 @@ describe('$isAlphanumeric', function() {
             filter: 'en-US',
             val: '!nvalid',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$isAlphanumeric');
+                assertionType.should.be.equal('isAlphanumeric');
                 context.locale.should.be.equal('en-US');
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$isAlphanumeric.call(context);
+        var resolvedContext = assertions.isAlphanumeric.call(context);
 
-        resolvedContext.message.should.be.equal('$isAlphanumeric');
+        resolvedContext.message.should.be.equal('isAlphanumeric');
     })
 
     it('should replace falsy filter value with `undefined` on extarnal validator method call', function() {
-        shouldTransformFilterValueToUndefined('$isAlphanumeric', {
+        shouldTransformFilterValueToUndefined('isAlphanumeric', {
             filter: '',
             val: 'abcd123'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isAlphanumeric', {
+        shouldTransformFilterValueToUndefined('isAlphanumeric', {
             filter:  null,
             val: 'abcd123'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isAlphanumeric', {
+        shouldTransformFilterValueToUndefined('isAlphanumeric', {
             filter:  0,
             val: 'abcd123'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isAlphanumeric', {
+        shouldTransformFilterValueToUndefined('isAlphanumeric', {
             filter:  false,
             val: 'abcd123'
         }, this.spy);
     })
 })
 
-describe('$isAscii', function() {
+describe('isAscii', function() {
     beforeEach(function() {
         this.spy = sinon.spy(stringValidator, 'isAscii');
     });
@@ -384,7 +384,7 @@ describe('$isAscii', function() {
             val: 'abcd123'
         };
 
-        var resolvedContext = assertions.$isAscii.call(context);
+        var resolvedContext = assertions.isAscii.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.have.been.calledWithExactly(context.val);
@@ -395,17 +395,17 @@ describe('$isAscii', function() {
         var context = {
             val: '¢',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$isAscii');
+                assertionType.should.be.equal('isAscii');
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$isAscii.call(context);
+        var resolvedContext = assertions.isAscii.call(context);
 
-        resolvedContext.message.should.be.equal('$isAscii');
+        resolvedContext.message.should.be.equal('isAscii');
     })
 })
 
-describe('$isBase64', function() {
+describe('isBase64', function() {
     beforeEach(function() {
         this.spy = sinon.spy(stringValidator, 'isBase64');
     });
@@ -419,7 +419,7 @@ describe('$isBase64', function() {
             val: new Buffer("Hello World").toString('base64')
         };
 
-        var resolvedContext = assertions.$isBase64.call(context);
+        var resolvedContext = assertions.isBase64.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.have.been.calledWithExactly(context.val);
@@ -430,17 +430,17 @@ describe('$isBase64', function() {
         var context = {
             val: 'invalid',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$isBase64');
+                assertionType.should.be.equal('isBase64');
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$isBase64.call(context);
+        var resolvedContext = assertions.isBase64.call(context);
 
-        resolvedContext.message.should.be.equal('$isBase64');
+        resolvedContext.message.should.be.equal('isBase64');
     })
 })
 
-describe('$isBefore', function() {
+describe('isBefore', function() {
     beforeEach(function() {
         this.spy = sinon.spy(stringValidator, 'isBefore');
     });
@@ -456,7 +456,7 @@ describe('$isBefore', function() {
             val: '2016-09-02'
         };
 
-        var resolvedContext = assertions.$isBefore.call(context);
+        var resolvedContext = assertions.isBefore.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val, context.filter);
@@ -468,40 +468,40 @@ describe('$isBefore', function() {
             filter: '2016-08-02',
             val: '2016-09-02',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$isBefore');
+                assertionType.should.be.equal('isBefore');
                 context.date.should.be.equal('2016-08-02');
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$isBefore.call(context);
+        var resolvedContext = assertions.isBefore.call(context);
 
-        resolvedContext.message.should.be.equal('$isBefore');
+        resolvedContext.message.should.be.equal('isBefore');
     })
 
     it('should replace falsy filter value with `undefined` on extarnal validator method call', function() {
-        shouldTransformFilterValueToUndefined('$isBefore', {
+        shouldTransformFilterValueToUndefined('isBefore', {
             filter: '',
             val: '2016-09-02'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isBefore', {
+        shouldTransformFilterValueToUndefined('isBefore', {
             filter:  null,
             val: '2016-09-02'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isBefore', {
+        shouldTransformFilterValueToUndefined('isBefore', {
             filter:  0,
             val: '2016-09-02'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isBefore', {
+        shouldTransformFilterValueToUndefined('isBefore', {
             filter:  false,
             val: '2016-09-02'
         }, this.spy);
     })
 })
 
-describe('$isBoolean', function() {
+describe('isBoolean', function() {
     beforeEach(function() {
         this.spy = sinon.spy(stringValidator, 'isBoolean');
     });
@@ -515,7 +515,7 @@ describe('$isBoolean', function() {
             val: 'false'
         };
 
-        var resolvedContext = assertions.$isBoolean.call(context);
+        var resolvedContext = assertions.isBoolean.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val);
@@ -526,13 +526,13 @@ describe('$isBoolean', function() {
         var context = {
             val: 'invalid',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$isBoolean');
+                assertionType.should.be.equal('isBoolean');
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$isBoolean.call(context);
+        var resolvedContext = assertions.isBoolean.call(context);
 
-        resolvedContext.message.should.be.equal('$isBoolean');
+        resolvedContext.message.should.be.equal('isBoolean');
     })
 
     it('should coerce string type of validated value before validation is forwarded to the external validator method', function() {
@@ -540,14 +540,14 @@ describe('$isBoolean', function() {
             val: false
         };
 
-        var resolvedContext = assertions.$isBoolean.call(context);
+        var resolvedContext = assertions.isBoolean.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val.toString());
     })
 })
 
-describe('$hasByteLength', function() {
+describe('hasByteLength', function() {
     beforeEach(function() {
         this.spy = sinon.spy(stringValidator, 'isByteLength');
     });
@@ -563,7 +563,7 @@ describe('$hasByteLength', function() {
             val: 'ab'
         };
 
-        var resolvedContext = assertions.$hasByteLength.call(context);
+        var resolvedContext = assertions.hasByteLength.call(context);
         resolvedContext.should.have.property('success', true, 'hasByteLength returned unexpected unsuccessfull response');
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val, context.filter);
@@ -581,35 +581,35 @@ describe('$hasByteLength', function() {
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$hasByteLength.call(context);
+        var resolvedContext = assertions.hasByteLength.call(context);
 
         resolvedContext.message.should.be.equal('between.byte');
     })
 
     it('should replace falsy filter value with `undefined` on extarnal validator method call', function() {
-        shouldTransformFilterValueToUndefined('$hasByteLength', {
+        shouldTransformFilterValueToUndefined('hasByteLength', {
             filter: '',
             val: 'some-string'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$hasByteLength', {
+        shouldTransformFilterValueToUndefined('hasByteLength', {
             filter:  null,
             val: 'some-string'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$hasByteLength', {
+        shouldTransformFilterValueToUndefined('hasByteLength', {
             filter:  0,
             val: 'some-string'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$hasByteLength', {
+        shouldTransformFilterValueToUndefined('hasByteLength', {
             filter:  false,
             val: 'some-string'
         }, this.spy);
     })
 })
 
-describe('$isCreditCard', function() {
+describe('isCreditCard', function() {
     beforeEach(function() {
         this.spy = sinon.spy(stringValidator, 'isCreditCard');
     });
@@ -624,7 +624,7 @@ describe('$isCreditCard', function() {
             val: '5555555555554444'
         };
 
-        var resolvedContext = assertions.$isCreditCard.call(context);
+        var resolvedContext = assertions.isCreditCard.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val);
@@ -636,18 +636,18 @@ describe('$isCreditCard', function() {
             val: 'abcd',
             propPath: 'prop.path',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$isCreditCard');
+                assertionType.should.be.equal('isCreditCard');
                 context.attr.should.be.equal('prop.path');
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$isCreditCard.call(context);
+        var resolvedContext = assertions.isCreditCard.call(context);
 
-        resolvedContext.message.should.be.equal('$isCreditCard');
+        resolvedContext.message.should.be.equal('isCreditCard');
     })
 })
 
-describe('$isCurrency', function() {
+describe('isCurrency', function() {
     beforeEach(function() {
         this.spy = sinon.spy(stringValidator, 'isCurrency');
     });
@@ -660,10 +660,10 @@ describe('$isCurrency', function() {
 
         var context = {
             filter: {},
-            val: '$5'
+            val: '5'
         };
 
-        var resolvedContext = assertions.$isCurrency.call(context);
+        var resolvedContext = assertions.isCurrency.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val, context.filter);
@@ -676,40 +676,40 @@ describe('$isCurrency', function() {
             val: 'invalid',
             propPath: 'prop.path',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$isCurrency');
+                assertionType.should.be.equal('isCurrency');
                 context.attr.should.be.equal('prop.path');
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$isCurrency.call(context);
+        var resolvedContext = assertions.isCurrency.call(context);
 
-        resolvedContext.message.should.be.equal('$isCurrency');
+        resolvedContext.message.should.be.equal('isCurrency');
     })
 
     it('should replace falsy filter value with `undefined` on extarnal validator method call', function() {
-        shouldTransformFilterValueToUndefined('$isCurrency', {
+        shouldTransformFilterValueToUndefined('isCurrency', {
             filter: '',
-            val: '$5'
+            val: '5'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isCurrency', {
+        shouldTransformFilterValueToUndefined('isCurrency', {
             filter:  null,
-            val: '$5'
+            val: '5'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isCurrency', {
+        shouldTransformFilterValueToUndefined('isCurrency', {
             filter:  0,
-            val: '$5'
+            val: '5'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isCurrency', {
+        shouldTransformFilterValueToUndefined('isCurrency', {
             filter:  false,
-            val: '$5'
+            val: '5'
         }, this.spy);
     })
 })
 
-describe('$isDataURI', function() {
+describe('isDataURI', function() {
     beforeEach(function() {
         this.spy = sinon.spy(stringValidator, 'isDataURI');
     });
@@ -723,7 +723,7 @@ describe('$isDataURI', function() {
             val: 'data:,Hello%2C%20World!'
         };
 
-        var resolvedContext = assertions.$isDataURI.call(context);
+        var resolvedContext = assertions.isDataURI.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val);
@@ -735,18 +735,18 @@ describe('$isDataURI', function() {
             val: 'invalid',
             propPath: 'prop.path',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$isDataURI');
+                assertionType.should.be.equal('isDataURI');
                 context.attr.should.be.equal('prop.path');
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$isDataURI.call(context);
+        var resolvedContext = assertions.isDataURI.call(context);
 
-        resolvedContext.message.should.be.equal('$isDataURI');
+        resolvedContext.message.should.be.equal('isDataURI');
     })
 })
 
-describe('$isDate', function() {
+describe('isDate', function() {
     beforeEach(function() {
         this.spy = sinon.spy(stringValidator, 'isDate');
     });
@@ -760,7 +760,7 @@ describe('$isDate', function() {
             val: '2011-08-04'
         };
 
-        var resolvedContext = assertions.$isDate.call(context);
+        var resolvedContext = assertions.isDate.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val);
@@ -772,18 +772,18 @@ describe('$isDate', function() {
             val: 'invalid',
             propPath: 'prop.path',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$isDate');
+                assertionType.should.be.equal('isDate');
                 context.attr.should.be.equal('prop.path');
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$isDate.call(context);
+        var resolvedContext = assertions.isDate.call(context);
 
-        resolvedContext.message.should.be.equal('$isDate');
+        resolvedContext.message.should.be.equal('isDate');
     })
 })
 
-describe('$isDecimal', function() {
+describe('isDecimal', function() {
     beforeEach(function() {
         this.spy = sinon.spy(stringValidator, 'isDecimal');
     });
@@ -797,7 +797,7 @@ describe('$isDecimal', function() {
             val: '12.12'
         };
 
-        var resolvedContext = assertions.$isDecimal.call(context);
+        var resolvedContext = assertions.isDecimal.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val);
@@ -809,14 +809,14 @@ describe('$isDecimal', function() {
             val: 'invalid',
             propPath: 'prop.path',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$isDecimal');
+                assertionType.should.be.equal('isDecimal');
                 context.attr.should.be.equal('prop.path');
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$isDecimal.call(context);
+        var resolvedContext = assertions.isDecimal.call(context);
 
-        resolvedContext.message.should.be.equal('$isDecimal');
+        resolvedContext.message.should.be.equal('isDecimal');
     })
 
     it('should coerce string type of validated value before validation is forwarded to the external validator method', function() {
@@ -824,14 +824,14 @@ describe('$isDecimal', function() {
             val: .10
         };
 
-        var resolvedContext = assertions.$isDecimal.call(context);
+        var resolvedContext = assertions.isDecimal.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val.toString());
     })
 })
 
-describe('$isDivisibleBy', function() {
+describe('isDivisibleBy', function() {
     beforeEach(function() {
         this.spy = sinon.spy(stringValidator, 'isDivisibleBy');
     });
@@ -846,7 +846,7 @@ describe('$isDivisibleBy', function() {
             val: '4'
         };
 
-        var resolvedContext = assertions.$isDivisibleBy.call(context);
+        var resolvedContext = assertions.isDivisibleBy.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val, context.filter);
@@ -859,15 +859,15 @@ describe('$isDivisibleBy', function() {
             val: 3,
             propPath: 'prop.path',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$isDivisibleBy');
+                assertionType.should.be.equal('isDivisibleBy');
                 context.attr.should.be.equal('prop.path');
                 context.number.should.be.equal(4);
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$isDivisibleBy.call(context);
+        var resolvedContext = assertions.isDivisibleBy.call(context);
 
-        resolvedContext.message.should.be.equal('$isDivisibleBy');
+        resolvedContext.message.should.be.equal('isDivisibleBy');
     })
 
     it('should coerce string type of validated value before validation is forwarded to the external validator method', function() {
@@ -876,14 +876,14 @@ describe('$isDivisibleBy', function() {
             val: 4
         };
 
-        var resolvedContext = assertions.$isDivisibleBy.call(context);
+        var resolvedContext = assertions.isDivisibleBy.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val.toString(), context.filter);
     })
 })
 
-describe('$isEmail', function() {
+describe('isEmail', function() {
     beforeEach(function() {
         this.spy = sinon.spy(stringValidator, 'isEmail');
     });
@@ -899,7 +899,7 @@ describe('$isEmail', function() {
             val: 'test@test.com'
         };
 
-        var resolvedContext = assertions.$isEmail.call(context);
+        var resolvedContext = assertions.isEmail.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val, context.filter);
@@ -912,40 +912,40 @@ describe('$isEmail', function() {
             val: 'invalid',
             propPath: 'prop.path',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$isEmail');
+                assertionType.should.be.equal('isEmail');
                 context.attr.should.be.equal('prop.path');
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$isEmail.call(context);
+        var resolvedContext = assertions.isEmail.call(context);
 
-        resolvedContext.message.should.be.equal('$isEmail');
+        resolvedContext.message.should.be.equal('isEmail');
     })
 
     it('should replace falsy filter value with `undefined` on extarnal validator method call', function() {
-        shouldTransformFilterValueToUndefined('$isEmail', {
+        shouldTransformFilterValueToUndefined('isEmail', {
             filter: '',
             val: 'test@test.com'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isEmail', {
+        shouldTransformFilterValueToUndefined('isEmail', {
             filter:  null,
             val: 'test@test.com'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isEmail', {
+        shouldTransformFilterValueToUndefined('isEmail', {
             filter:  0,
             val: 'test@test.com'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isEmail', {
+        shouldTransformFilterValueToUndefined('isEmail', {
             filter:  false,
             val: 'test@test.com'
         }, this.spy);
     })
 })
 
-describe('$isFQDN', function() {
+describe('isFQDN', function() {
     beforeEach(function() {
         this.spy = sinon.spy(stringValidator, 'isFQDN');
     });
@@ -961,7 +961,7 @@ describe('$isFQDN', function() {
             val: 'mymail.somecollege.edu'
         };
 
-        var resolvedContext = assertions.$isFQDN.call(context);
+        var resolvedContext = assertions.isFQDN.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val, context.filter);
@@ -974,40 +974,40 @@ describe('$isFQDN', function() {
             val: 'invalid',
             propPath: 'prop.path',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$isFQDN');
+                assertionType.should.be.equal('isFQDN');
                 context.attr.should.be.equal('prop.path');
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$isFQDN.call(context);
+        var resolvedContext = assertions.isFQDN.call(context);
 
-        resolvedContext.message.should.be.equal('$isFQDN');
+        resolvedContext.message.should.be.equal('isFQDN');
     })
 
     it('should replace falsy filter value with `undefined` on extarnal validator method call', function() {
-        shouldTransformFilterValueToUndefined('$isFQDN', {
+        shouldTransformFilterValueToUndefined('isFQDN', {
             filter: '',
             val: 'mymail.somecollege.edu'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isFQDN', {
+        shouldTransformFilterValueToUndefined('isFQDN', {
             filter:  null,
             val: 'mymail.somecollege.edu'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isFQDN', {
+        shouldTransformFilterValueToUndefined('isFQDN', {
             filter:  0,
             val: 'mymail.somecollege.edu'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isFQDN', {
+        shouldTransformFilterValueToUndefined('isFQDN', {
             filter:  false,
             val: 'mymail.somecollege.edu'
         }, this.spy);
     })
 })
 
-describe('$isFloat', function() {
+describe('isFloat', function() {
     beforeEach(function() {
         this.spy = sinon.spy(stringValidator, 'isFloat');
     });
@@ -1023,7 +1023,7 @@ describe('$isFloat', function() {
             val: '3.3'
         };
 
-        var resolvedContext = assertions.$isFloat.call(context);
+        var resolvedContext = assertions.isFloat.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val, context.filter);
@@ -1043,39 +1043,39 @@ describe('$isFloat', function() {
             }
         };
 
-        var resolvedContext = assertions.$isFloat.call(context);
+        var resolvedContext = assertions.isFloat.call(context);
         resolvedContext.message.should.be.equal('between.number');
 
         //test 2
         var context2 = {
             val: 'invalid',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$isFloat');
+                assertionType.should.be.equal('isFloat');
                 return assertionType;
             }
         };
-        var resolvedContext2 = assertions.$isFloat.call(context2);
-        resolvedContext2.message.should.be.equal('$isFloat');
+        var resolvedContext2 = assertions.isFloat.call(context2);
+        resolvedContext2.message.should.be.equal('isFloat');
 
     })
 
     it('should replace falsy filter value with `undefined` on extarnal validator method call', function() {
-        shouldTransformFilterValueToUndefined('$isFloat', {
+        shouldTransformFilterValueToUndefined('isFloat', {
             filter: '',
             val: '3.3'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isFloat', {
+        shouldTransformFilterValueToUndefined('isFloat', {
             filter:  null,
             val: '3.3'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isFloat', {
+        shouldTransformFilterValueToUndefined('isFloat', {
             filter:  0,
             val: '3.3'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isFloat', {
+        shouldTransformFilterValueToUndefined('isFloat', {
             filter:  false,
             val: '3.3'
         }, this.spy);
@@ -1087,14 +1087,14 @@ describe('$isFloat', function() {
             val: 4.4
         };
 
-        var resolvedContext = assertions.$isFloat.call(context);
+        var resolvedContext = assertions.isFloat.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val.toString(), context.filter);
     })
 })
 
-describe('$isFullWidth', function() {
+describe('isFullWidth', function() {
     beforeEach(function() {
         this.spy = sinon.spy(stringValidator, 'isFullWidth');
     });
@@ -1109,7 +1109,7 @@ describe('$isFullWidth', function() {
             val: 'Ｅｎｔｅｒ  ｓｏｍｅ  ｔｅｘｔ'
         };
 
-        var resolvedContext = assertions.$isFullWidth.call(context);
+        var resolvedContext = assertions.isFullWidth.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val);
@@ -1121,17 +1121,17 @@ describe('$isFullWidth', function() {
             val: 'invalid',
             propPath: 'prop.path',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$isFullWidth');
+                assertionType.should.be.equal('isFullWidth');
                 context.attr.should.be.equal('prop.path');
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$isFullWidth.call(context);
+        var resolvedContext = assertions.isFullWidth.call(context);
 
-        resolvedContext.message.should.be.equal('$isFullWidth');
+        resolvedContext.message.should.be.equal('isFullWidth');
     })
 })
-describe('$isHalfWidth', function() {
+describe('isHalfWidth', function() {
     beforeEach(function() {
         this.spy = sinon.spy(stringValidator, 'isHalfWidth');
     });
@@ -1146,14 +1146,14 @@ describe('$isHalfWidth', function() {
             val: 'ｔｅｘｔ',
             propPath: 'prop.path',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$isHalfWidth');
+                assertionType.should.be.equal('isHalfWidth');
                 context.attr.should.be.equal('prop.path');
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$isHalfWidth.call(context);
+        var resolvedContext = assertions.isHalfWidth.call(context);
 
-        resolvedContext.message.should.be.equal('$isHalfWidth');
+        resolvedContext.message.should.be.equal('isHalfWidth');
     })
 
     it('should call external `isHalfWidth` validator', function() {
@@ -1162,14 +1162,14 @@ describe('$isHalfWidth', function() {
             val: 'Some text'
         };
 
-        var resolvedContext = assertions.$isHalfWidth.call(context);
+        var resolvedContext = assertions.isHalfWidth.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val);
     })
 })
 
-describe('$isHexColor', function() {
+describe('isHexColor', function() {
     beforeEach(function() {
         this.spy = sinon.spy(stringValidator, 'isHexColor');
     });
@@ -1184,7 +1184,7 @@ describe('$isHexColor', function() {
             val: '#1f1f1f'
         };
 
-        var resolvedContext = assertions.$isHexColor.call(context);
+        var resolvedContext = assertions.isHexColor.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val);
@@ -1196,18 +1196,18 @@ describe('$isHexColor', function() {
             val: 'invalid',
             propPath: 'prop.path',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$isHexColor');
+                assertionType.should.be.equal('isHexColor');
                 context.attr.should.be.equal('prop.path');
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$isHexColor.call(context);
+        var resolvedContext = assertions.isHexColor.call(context);
 
-        resolvedContext.message.should.be.equal('$isHexColor');
+        resolvedContext.message.should.be.equal('isHexColor');
     })
 })
 
-describe('$isHexadecimal', function() {
+describe('isHexadecimal', function() {
     beforeEach(function() {
         this.spy = sinon.spy(stringValidator, 'isHexadecimal');
     });
@@ -1222,7 +1222,7 @@ describe('$isHexadecimal', function() {
             val: '1f'
         };
 
-        var resolvedContext = assertions.$isHexadecimal.call(context);
+        var resolvedContext = assertions.isHexadecimal.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val);
@@ -1234,18 +1234,18 @@ describe('$isHexadecimal', function() {
             val: 'invalid',
             propPath: 'prop.path',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$isHexadecimal');
+                assertionType.should.be.equal('isHexadecimal');
                 context.attr.should.be.equal('prop.path');
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$isHexadecimal.call(context);
+        var resolvedContext = assertions.isHexadecimal.call(context);
 
-        resolvedContext.message.should.be.equal('$isHexadecimal');
+        resolvedContext.message.should.be.equal('isHexadecimal');
     })
 })
 
-describe('$isIP', function() {
+describe('isIP', function() {
     beforeEach(function() {
         this.spy = sinon.spy(stringValidator, 'isIP');
     });
@@ -1261,7 +1261,7 @@ describe('$isIP', function() {
             val: '192.168.0.1'
         };
 
-        var resolvedContext = assertions.$isIP.call(context);
+        var resolvedContext = assertions.isIP.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val, context.filter);
@@ -1274,41 +1274,41 @@ describe('$isIP', function() {
             val: 'invalid',
             propPath: 'prop.path',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$isIP');
+                assertionType.should.be.equal('isIP');
                 context.attr.should.be.equal('prop.path');
                 context.version.should.be.equal(4);
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$isIP.call(context);
+        var resolvedContext = assertions.isIP.call(context);
 
-        resolvedContext.message.should.be.equal('$isIP');
+        resolvedContext.message.should.be.equal('isIP');
     })
 
     it('should replace falsy filter value with `undefined` on extarnal validator method call', function() {
-        shouldTransformFilterValueToUndefined('$isIP', {
+        shouldTransformFilterValueToUndefined('isIP', {
             filter: '',
             val: '192.168.0.1'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isIP', {
+        shouldTransformFilterValueToUndefined('isIP', {
             filter:  null,
             val: '192.168.0.1'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isIP', {
+        shouldTransformFilterValueToUndefined('isIP', {
             filter:  0,
             val: '192.168.0.1'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isIP', {
+        shouldTransformFilterValueToUndefined('isIP', {
             filter:  false,
             val: '192.168.0.1'
         }, this.spy);
     })
 })
 
-describe('$isISBN', function() {
+describe('isISBN', function() {
     beforeEach(function() {
         this.spy = sinon.spy(stringValidator, 'isISBN');
     });
@@ -1324,7 +1324,7 @@ describe('$isISBN', function() {
             val: '978-3-16-148410-0'
         };
 
-        var resolvedContext = assertions.$isISBN.call(context);
+        var resolvedContext = assertions.isISBN.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val, context.filter);
@@ -1337,41 +1337,41 @@ describe('$isISBN', function() {
             val: 'invalid',
             propPath: 'prop.path',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$isISBN');
+                assertionType.should.be.equal('isISBN');
                 context.attr.should.be.equal('prop.path');
                 context.version.should.be.equal(13);
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$isISBN.call(context);
+        var resolvedContext = assertions.isISBN.call(context);
 
-        resolvedContext.message.should.be.equal('$isISBN');
+        resolvedContext.message.should.be.equal('isISBN');
     })
 
     it('should replace falsy filter value with `undefined` on extarnal validator method call', function() {
-        shouldTransformFilterValueToUndefined('$isISBN', {
+        shouldTransformFilterValueToUndefined('isISBN', {
             filter: '',
             val: '978-3-16-148410-0'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isISBN', {
+        shouldTransformFilterValueToUndefined('isISBN', {
             filter:  null,
             val: '978-3-16-148410-0'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isISBN', {
+        shouldTransformFilterValueToUndefined('isISBN', {
             filter:  0,
             val: '978-3-16-148410-0'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isISBN', {
+        shouldTransformFilterValueToUndefined('isISBN', {
             filter:  false,
             val: '978-3-16-148410-0'
         }, this.spy);
     })
 })
 
-describe('$isInt', function() {
+describe('isInt', function() {
     beforeEach(function() {
         this.spy = sinon.spy(stringValidator, 'isInt');
     });
@@ -1387,7 +1387,7 @@ describe('$isInt', function() {
             val: '15'
         };
 
-        var resolvedContext = assertions.$isInt.call(context);
+        var resolvedContext = assertions.isInt.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val, context.filter);
@@ -1405,33 +1405,33 @@ describe('$isInt', function() {
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$isInt.call(context);
+        var resolvedContext = assertions.isInt.call(context);
         resolvedContext.message.should.be.equal('between.number');
 
         //test 2
         var context2 = {
             val: 'invalid',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$isInt');
+                assertionType.should.be.equal('isInt');
                 return assertionType;
             }
         };
-        var resolvedContext2 = assertions.$isInt.call(context2);
-        resolvedContext2.message.should.be.equal('$isInt');
+        var resolvedContext2 = assertions.isInt.call(context2);
+        resolvedContext2.message.should.be.equal('isInt');
     })
 
     it('should replace falsy filter value with `undefined` on extarnal validator method call', function() {
-        shouldTransformFilterValueToUndefined('$isInt', {
+        shouldTransformFilterValueToUndefined('isInt', {
             filter: '',
             val: '15'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isInt', {
+        shouldTransformFilterValueToUndefined('isInt', {
             filter:  null,
             val: '15'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isInt', {
+        shouldTransformFilterValueToUndefined('isInt', {
             filter:  false,
             val: '15'
         }, this.spy);
@@ -1443,14 +1443,14 @@ describe('$isInt', function() {
             val: 15
         };
 
-        var resolvedContext = assertions.$isInt.call(context);
+        var resolvedContext = assertions.isInt.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val.toString(), context.filter);
     })
 })
 
-describe('$isJSON', function() {
+describe('isJSON', function() {
     beforeEach(function() {
         this.spy = sinon.spy(stringValidator, 'isJSON');
     });
@@ -1465,7 +1465,7 @@ describe('$isJSON', function() {
             val: '{"test": "value", "test2": 3, "test3": null}'
         };
 
-        var resolvedContext = assertions.$isJSON.call(context);
+        var resolvedContext = assertions.isJSON.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val);
@@ -1477,18 +1477,18 @@ describe('$isJSON', function() {
             val: 'invalid',
             propPath: 'prop.path',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$isJSON');
+                assertionType.should.be.equal('isJSON');
                 context.attr.should.be.equal('prop.path');
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$isJSON.call(context);
+        var resolvedContext = assertions.isJSON.call(context);
 
-        resolvedContext.message.should.be.equal('$isJSON');
+        resolvedContext.message.should.be.equal('isJSON');
     })
 })
 
-describe('$hasLengthOf', function() {
+describe('hasLengthOf', function() {
     beforeEach(function() {
         this.spy = sinon.spy(stringValidator, 'isLength');
     });
@@ -1501,10 +1501,10 @@ describe('$hasLengthOf', function() {
 
         var context = {
             filter: {},
-            val: '$5'
+            val: '5'
         };
 
-        var resolvedContext = assertions.$hasLengthOf.call(context);
+        var resolvedContext = assertions.hasLengthOf.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val, context.filter);
@@ -1523,7 +1523,7 @@ describe('$hasLengthOf', function() {
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$hasLengthOf.call(context);
+        var resolvedContext = assertions.hasLengthOf.call(context);
         resolvedContext.message.should.be.equal('between.string');
 
         //testcase 2
@@ -1535,7 +1535,7 @@ describe('$hasLengthOf', function() {
                 return assertionType;
             }
         };
-        var resolvedContext2 = assertions.$hasLengthOf.call(context2);
+        var resolvedContext2 = assertions.hasLengthOf.call(context2);
         resolvedContext2.message.should.be.equal('between.array');
     })
 
@@ -1545,71 +1545,71 @@ describe('$hasLengthOf', function() {
             filter: undefined,
             val: ['val1', 'val2']
         };
-        var resolvedContext = assertions.$hasLengthOf.call(context);
+        var resolvedContext = assertions.hasLengthOf.call(context);
         resolvedContext.should.have.property('success', true);
 
         var context = {
             filter: {},
             val: ['val1', 'val2']
         };
-        var resolvedContext = assertions.$hasLengthOf.call(context);
+        var resolvedContext = assertions.hasLengthOf.call(context);
         resolvedContext.should.have.property('success', true);
 
         context = {
             filter: {min: 3},
             val: ['val1', 'val2']
         };
-        resolvedContext = assertions.$hasLengthOf.call(context);
+        resolvedContext = assertions.hasLengthOf.call(context);
         resolvedContext.should.have.property('success', false);
 
         context = {
             filter: {min: 2},
             val: ['val1', 'val2']
         };
-        resolvedContext = assertions.$hasLengthOf.call(context);
+        resolvedContext = assertions.hasLengthOf.call(context);
         resolvedContext.should.have.property('success', true);
 
         context = {
             filter: {max: 2},
             val: [1, 2]
         };
-        resolvedContext = assertions.$hasLengthOf.call(context);
+        resolvedContext = assertions.hasLengthOf.call(context);
         resolvedContext.should.have.property('success', true);
 
         context = {
             filter: {max: 1},
             val: [1, 2]
         };
-        resolvedContext = assertions.$hasLengthOf.call(context);
+        resolvedContext = assertions.hasLengthOf.call(context);
         resolvedContext.should.have.property('success', false);
 
         context = {
             filter: {min: 2, max: 2},
             val: [1, 2]
         };
-        resolvedContext = assertions.$hasLengthOf.call(context);
+        resolvedContext = assertions.hasLengthOf.call(context);
         resolvedContext.should.have.property('success', true);
 
         context = {
             filter: {min: 2, max: 2},
             val: [1, 2, 3]
         };
-        resolvedContext = assertions.$hasLengthOf.call(context);
+        resolvedContext = assertions.hasLengthOf.call(context);
         resolvedContext.should.have.property('success', false);
     })
 
     it('should replace falsy filter value with `undefined` on extarnal validator method call (when validated value is of string type)', function() {
-        shouldTransformFilterValueToUndefined('$hasLengthOf', {
+        shouldTransformFilterValueToUndefined('hasLengthOf', {
             filter: '',
             val: 'test'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$hasLengthOf', {
+        shouldTransformFilterValueToUndefined('hasLengthOf', {
             filter:  null,
             val: 'test'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$hasLengthOf', {
+        shouldTransformFilterValueToUndefined('hasLengthOf', {
             filter:  false,
             val: 'test'
         }, this.spy);
@@ -1617,7 +1617,7 @@ describe('$hasLengthOf', function() {
 })
 
 
-describe('$isNumeric', function() {
+describe('isNumeric', function() {
     beforeEach(function() {
         this.spy = sinon.spy(stringValidator, 'isNumeric');
     });
@@ -1632,7 +1632,7 @@ describe('$isNumeric', function() {
             val: '-5'
         };
 
-        var resolvedContext = assertions.$isNumeric.call(context);
+        var resolvedContext = assertions.isNumeric.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val);
@@ -1644,18 +1644,18 @@ describe('$isNumeric', function() {
             val: 'invalid',
             propPath: 'prop.path',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$isNumeric');
+                assertionType.should.be.equal('isNumeric');
                 context.attr.should.be.equal('prop.path');
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$isNumeric.call(context);
+        var resolvedContext = assertions.isNumeric.call(context);
 
-        resolvedContext.message.should.be.equal('$isNumeric');
+        resolvedContext.message.should.be.equal('isNumeric');
     })
 })
 
-describe('$isURL', function() {
+describe('isURL', function() {
     beforeEach(function() {
         this.spy = sinon.spy(stringValidator, 'isURL');
     });
@@ -1671,7 +1671,7 @@ describe('$isURL', function() {
             val: 'https://google.com'
         };
 
-        var resolvedContext = assertions.$isURL.call(context);
+        var resolvedContext = assertions.isURL.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val, context.filter);
@@ -1684,40 +1684,40 @@ describe('$isURL', function() {
             val: 'invalid',
             propPath: 'prop.path',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$isURL');
+                assertionType.should.be.equal('isURL');
                 context.attr.should.be.equal('prop.path');
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$isURL.call(context);
+        var resolvedContext = assertions.isURL.call(context);
 
-        resolvedContext.message.should.be.equal('$isURL');
+        resolvedContext.message.should.be.equal('isURL');
     })
 
     it('should replace falsy filter value with `undefined` on extarnal validator method call', function() {
-        shouldTransformFilterValueToUndefined('$isURL', {
+        shouldTransformFilterValueToUndefined('isURL', {
             filter: '',
             val: 'https://google.com'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isURL', {
+        shouldTransformFilterValueToUndefined('isURL', {
             filter:  null,
             val: 'https://google.com'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isURL', {
+        shouldTransformFilterValueToUndefined('isURL', {
             filter:  0,
             val: 'https://google.com'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isURL', {
+        shouldTransformFilterValueToUndefined('isURL', {
             filter:  false,
             val: 'https://google.com'
         }, this.spy);
     })
 })
 
-describe('$isUUID', function() {
+describe('isUUID', function() {
     beforeEach(function() {
         this.spy = sinon.spy(stringValidator, 'isUUID');
     });
@@ -1733,7 +1733,7 @@ describe('$isUUID', function() {
             val: '4b94c16f-8b6a-4302-aa36-ac7bd447d690'
         };
 
-        var resolvedContext = assertions.$isUUID.call(context);
+        var resolvedContext = assertions.isUUID.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val, context.filter);
@@ -1746,41 +1746,41 @@ describe('$isUUID', function() {
             val: 'invalid',
             propPath: 'prop.path',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$isUUID');
+                assertionType.should.be.equal('isUUID');
                 context.attr.should.be.equal('prop.path');
                 context.version.should.be.equal(4);
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$isUUID.call(context);
+        var resolvedContext = assertions.isUUID.call(context);
 
-        resolvedContext.message.should.be.equal('$isUUID');
+        resolvedContext.message.should.be.equal('isUUID');
     })
 
     it('should replace falsy filter value with `undefined` on extarnal validator method call', function() {
-        shouldTransformFilterValueToUndefined('$isUUID', {
+        shouldTransformFilterValueToUndefined('isUUID', {
             filter: '',
             val: '4b94c16f-8b6a-4302-aa36-ac7bd447d690'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isUUID', {
+        shouldTransformFilterValueToUndefined('isUUID', {
             filter:  null,
             val: '4b94c16f-8b6a-4302-aa36-ac7bd447d690'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isUUID', {
+        shouldTransformFilterValueToUndefined('isUUID', {
             filter:  0,
             val: '4b94c16f-8b6a-4302-aa36-ac7bd447d690'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$isUUID', {
+        shouldTransformFilterValueToUndefined('isUUID', {
             filter:  false,
             val: '4b94c16f-8b6a-4302-aa36-ac7bd447d690'
         }, this.spy);
     });
 })
 
-describe('$matches', function() {
+describe('matches', function() {
     beforeEach(function() {
         this.spy = sinon.spy(stringValidator, 'matches');
     });
@@ -1796,7 +1796,7 @@ describe('$matches', function() {
             val: '111aaaIII'
         };
 
-        var resolvedContext = assertions.$matches.call(context);
+        var resolvedContext = assertions.matches.call(context);
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val, context.filter);
@@ -1809,41 +1809,41 @@ describe('$matches', function() {
             val: 'invalid',
             propPath: 'prop.path',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$matches');
+                assertionType.should.be.equal('matches');
                 context.attr.should.be.equal('prop.path');
                 context.pattern.should.be.eql(/^test$/);
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$matches.call(context);
+        var resolvedContext = assertions.matches.call(context);
 
-        resolvedContext.message.should.be.equal('$matches');
+        resolvedContext.message.should.be.equal('matches');
     })
 
     it('should replace falsy filter value with `undefined` on extarnal validator method call', function() {
-        shouldTransformFilterValueToUndefined('$matches', {
+        shouldTransformFilterValueToUndefined('matches', {
             filter: '',
             val: '111aaaIII'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$matches', {
+        shouldTransformFilterValueToUndefined('matches', {
             filter:  null,
             val: '111aaaIII'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$matches', {
+        shouldTransformFilterValueToUndefined('matches', {
             filter:  0,
             val: '111aaaIII'
         }, this.spy);
 
-        shouldTransformFilterValueToUndefined('$matches', {
+        shouldTransformFilterValueToUndefined('matches', {
             filter:  false,
             val: '111aaaIII'
         }, this.spy);
     });
 })
 
-describe('$isEmpty', function() {
+describe('isEmpty', function() {
     it('should return true if validated value is one of (null, undefined, "") values', function() {
         var valid = [
             {},
@@ -1860,12 +1860,12 @@ describe('$isEmpty', function() {
         ];
 
         valid.forEach(function(testVal) {
-            var resolvedContext = assertions.$isEmpty.call(testVal);
+            var resolvedContext = assertions.isEmpty.call(testVal);
             resolvedContext.should.have.property('success', true);
         });
 
         invalid.forEach(function(testVal) {
-            var resolvedContext = assertions.$isEmpty.call(testVal);
+            var resolvedContext = assertions.isEmpty.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
     })
@@ -1876,18 +1876,18 @@ describe('$isEmpty', function() {
             val: 'invalid',
             propPath: 'prop.path',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$isEmpty');
+                assertionType.should.be.equal('isEmpty');
                 context.attr.should.be.equal('prop.path');
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$isEmpty.call(context);
+        var resolvedContext = assertions.isEmpty.call(context);
 
-        resolvedContext.message.should.be.equal('$isEmpty');
+        resolvedContext.message.should.be.equal('isEmpty');
     })
 })
 
-describe('$gt', function() {
+describe('gt', function() {
     it('should return true if and only if provided number value is grater than a number value passed as filter', function() {
         var valid = [
             {val: 0, filter: -1},
@@ -1904,12 +1904,12 @@ describe('$gt', function() {
         ];
 
         valid.forEach(function(testVal) {
-            var resolvedContext = assertions.$gt.call(testVal);
+            var resolvedContext = assertions.gt.call(testVal);
             resolvedContext.should.have.property('success', true);
         });
 
         invalid.forEach(function(testVal) {
-            var resolvedContext = assertions.$gt.call(testVal);
+            var resolvedContext = assertions.gt.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
     })
@@ -1921,39 +1921,41 @@ describe('$gt', function() {
             val: 1,
             propPath: 'prop.path',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$gt');
+                assertionType.should.be.equal('gt');
                 context.attr.should.be.equal('prop.path');
                 context.min.should.be.equal(5);
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$gt.call(context);
+        var resolvedContext = assertions.gt.call(context);
 
-        resolvedContext.message.should.be.equal('$gt');
+        resolvedContext.message.should.be.equal('gt');
     })
 
     it('should support an object with reference to another data field which is being validated as filter value', function() {
         var context = {
             val: 5,
             filter: {$ref: 'info.age'},
+            keywordPrefix: '$',
             overallData: {info: {age: 3}}
         };
-        var resolvedContext = assertions.$gt.call(context);
+        var resolvedContext = assertions.gt.call(context);
         resolvedContext.should.have.property('success', true);
 
 
         context = {
             val: 5,
             filter: {$ref: 'pid'},
+            keywordPrefix: '$',
             overallData: {pid: 2}
         };
 
-        resolvedContext = assertions.$gt.call(context);
+        resolvedContext = assertions.gt.call(context);
         resolvedContext.should.have.property('success', true);
     });
 })
 
-describe('$gte', function() {
+describe('gte', function() {
     it('should return true if and only if provided number value is grater than or equal to a number value passed as filter', function() {
         var valid = [
             {val: 0, filter: -1},
@@ -1971,12 +1973,12 @@ describe('$gte', function() {
         ];
 
         valid.forEach(function(testVal) {
-            var resolvedContext = assertions.$gte.call(testVal);
+            var resolvedContext = assertions.gte.call(testVal);
             resolvedContext.should.have.property('success', true);
         });
 
         invalid.forEach(function(testVal) {
-            var resolvedContext = assertions.$gte.call(testVal);
+            var resolvedContext = assertions.gte.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
     })
@@ -1988,39 +1990,41 @@ describe('$gte', function() {
             val: 1,
             propPath: 'prop.path',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$gte');
+                assertionType.should.be.equal('gte');
                 context.attr.should.be.equal('prop.path');
                 context.min.should.be.equal(5);
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$gte.call(context);
+        var resolvedContext = assertions.gte.call(context);
 
-        resolvedContext.message.should.be.equal('$gte');
+        resolvedContext.message.should.be.equal('gte');
     })
 
     it('should support an object with reference to another data field which is being validated as filter value', function() {
         var context = {
             val: 5,
             filter: {$ref: 'info.age'},
+            keywordPrefix: '$',
             overallData: {info: {age: 3}}
         };
-        var resolvedContext = assertions.$gte.call(context);
+        var resolvedContext = assertions.gte.call(context);
         resolvedContext.should.have.property('success', true);
 
 
         context = {
             val: 5,
             filter: {$ref: 'pid'},
+            keywordPrefix: '$',
             overallData: {pid: 5}
         };
 
-        resolvedContext = assertions.$gte.call(context);
+        resolvedContext = assertions.gte.call(context);
         resolvedContext.should.have.property('success', true);
     });
 })
 
-describe('$lt', function() {
+describe('lt', function() {
     it('should return true if and only if provided number value is lower than a number value passed as filter', function() {
         var valid = [
             {val: -1, filter: 0},
@@ -2037,12 +2041,12 @@ describe('$lt', function() {
         ];
 
         valid.forEach(function(testVal) {
-            var resolvedContext = assertions.$lt.call(testVal);
+            var resolvedContext = assertions.lt.call(testVal);
             resolvedContext.should.have.property('success', true);
         });
 
         invalid.forEach(function(testVal) {
-            var resolvedContext = assertions.$lt.call(testVal);
+            var resolvedContext = assertions.lt.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
     })
@@ -2054,39 +2058,41 @@ describe('$lt', function() {
             val: 5,
             propPath: 'prop.path',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$lt');
+                assertionType.should.be.equal('lt');
                 context.attr.should.be.equal('prop.path');
                 context.max.should.be.equal(1);
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$lt.call(context);
+        var resolvedContext = assertions.lt.call(context);
 
-        resolvedContext.message.should.be.equal('$lt');
+        resolvedContext.message.should.be.equal('lt');
     })
 
     it('should support an object with reference to another data field which is being validated as filter value', function() {
         var context = {
             val: 3,
             filter: {$ref: 'info.age'},
+            keywordPrefix: '$',
             overallData: {info: {age: 5}}
         };
-        var resolvedContext = assertions.$lt.call(context);
+        var resolvedContext = assertions.lt.call(context);
         resolvedContext.should.have.property('success', true);
 
 
         context = {
             val: 2,
             filter: {$ref: 'pid'},
+            keywordPrefix: '$',
             overallData: {pid: 5}
         };
 
-        resolvedContext = assertions.$lt.call(context);
+        resolvedContext = assertions.lt.call(context);
         resolvedContext.should.have.property('success', true);
     });
 })
 
-describe('$lte', function() {
+describe('lte', function() {
     it('should return true if and only if provided number value is lower than or equal to a number value passed as filter', function() {
         var valid = [
             {val: -1, filter: 0},
@@ -2104,12 +2110,12 @@ describe('$lte', function() {
         ];
 
         valid.forEach(function(testVal) {
-            var resolvedContext = assertions.$lte.call(testVal);
+            var resolvedContext = assertions.lte.call(testVal);
             resolvedContext.should.have.property('success', true);
         });
 
         invalid.forEach(function(testVal) {
-            var resolvedContext = assertions.$lte.call(testVal);
+            var resolvedContext = assertions.lte.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
     })
@@ -2121,39 +2127,41 @@ describe('$lte', function() {
             val: 5,
             propPath: 'prop.path',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$lte');
+                assertionType.should.be.equal('lte');
                 context.attr.should.be.equal('prop.path');
                 context.max.should.be.equal(1);
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$lte.call(context);
+        var resolvedContext = assertions.lte.call(context);
 
-        resolvedContext.message.should.be.equal('$lte');
+        resolvedContext.message.should.be.equal('lte');
     })
 
     it('should support an object with reference to another data field which is being validated as filter value', function() {
         var context = {
             val: 3,
             filter: {$ref: 'info.age'},
+            keywordPrefix: '$',
             overallData: {info: {age: 5}}
         };
-        var resolvedContext = assertions.$lte.call(context);
+        var resolvedContext = assertions.lte.call(context);
         resolvedContext.should.have.property('success', true);
 
 
         context = {
             val: 2,
             filter: {$ref: 'pid'},
+            keywordPrefix: '$',
             overallData: {pid: 5}
         };
 
-        resolvedContext = assertions.$lte.call(context);
+        resolvedContext = assertions.lte.call(context);
         resolvedContext.should.have.property('success', true);
     });
 })
 
-describe('$eq', function() {
+describe('eq', function() {
     it('should return true if and only if provided number value is equal to a number value passed as filter', function() {
         var valid = [
             {val: 4, filter: 4},
@@ -2174,12 +2182,12 @@ describe('$eq', function() {
         ];
 
         valid.forEach(function(testVal) {
-            var resolvedContext = assertions.$eq.call(testVal);
+            var resolvedContext = assertions.eq.call(testVal);
             resolvedContext.should.have.property('success', true);
         });
 
         invalid.forEach(function(testVal) {
-            var resolvedContext = assertions.$eq.call(testVal);
+            var resolvedContext = assertions.eq.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
     })
@@ -2191,39 +2199,41 @@ describe('$eq', function() {
             val: 4,
             propPath: 'prop.path',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$eq');
+                assertionType.should.be.equal('eq');
                 context.attr.should.be.equal('prop.path');
                 context.value.should.be.equal(5);
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$eq.call(context);
+        var resolvedContext = assertions.eq.call(context);
 
-        resolvedContext.message.should.be.equal('$eq');
+        resolvedContext.message.should.be.equal('eq');
     })
 
     it('should support an object with reference to another data field which is being validated as filter value', function() {
         var context = {
             val: 5,
             filter: {$ref: 'info.age'},
+            keywordPrefix: '$',
             overallData: {info: {age: 5}}
         };
-        var resolvedContext = assertions.$eq.call(context);
+        var resolvedContext = assertions.eq.call(context);
         resolvedContext.should.have.property('success', true);
 
 
         context = {
             val: 5,
             filter: {$ref: 'pid'},
+            keywordPrefix: '$',
             overallData: {pid: 5}
         };
 
-        resolvedContext = assertions.$eq.call(context);
+        resolvedContext = assertions.eq.call(context);
         resolvedContext.should.have.property('success', true);
     });
 })
 
-describe('$ne', function() {
+describe('ne', function() {
     it('should return true if and only if provided number value is not equal to a number value passed as filter', function() {
         var valid = [
             {val: -1, filter: 0},
@@ -2242,12 +2252,12 @@ describe('$ne', function() {
         ];
 
         valid.forEach(function(testVal) {
-            var resolvedContext = assertions.$ne.call(testVal);
+            var resolvedContext = assertions.ne.call(testVal);
             resolvedContext.should.have.property('success', true);
         });
 
         invalid.forEach(function(testVal) {
-            var resolvedContext = assertions.$ne.call(testVal);
+            var resolvedContext = assertions.ne.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
     })
@@ -2259,39 +2269,41 @@ describe('$ne', function() {
             val: 5,
             propPath: 'prop.path',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$ne');
+                assertionType.should.be.equal('ne');
                 context.attr.should.be.equal('prop.path');
                 context.value.should.be.equal(5);
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$ne.call(context);
+        var resolvedContext = assertions.ne.call(context);
 
-        resolvedContext.message.should.be.equal('$ne');
+        resolvedContext.message.should.be.equal('ne');
     })
 
     it('should support an object with reference to another data field which is being validated as filter value', function() {
         var context = {
             val: 3,
             filter: {$ref: 'info.age'},
+            keywordPrefix: '$',
             overallData: {info: {age: 5}}
         };
-        var resolvedContext = assertions.$ne.call(context);
+        var resolvedContext = assertions.ne.call(context);
         resolvedContext.should.have.property('success', true);
 
 
         context = {
             val: 2,
             filter: {$ref: 'pid'},
+            keywordPrefix: '$',
             overallData: {pid: 5}
         };
 
-        resolvedContext = assertions.$ne.call(context);
+        resolvedContext = assertions.ne.call(context);
         resolvedContext.should.have.property('success', true);
     });
 })
 
-describe('$between', function() {
+describe('between', function() {
     it('should return true if and only if a validated value is a number between range of two defined numbers (including the defined numbers)', function() {
         var valid = [
             {val: 1, filter: [-1, 2]},
@@ -2313,18 +2325,18 @@ describe('$between', function() {
         ];
 
         valid.forEach(function(testVal) {
-            var resolvedContext = assertions.$between.call(testVal);
+            var resolvedContext = assertions.between.call(testVal);
             resolvedContext.should.have.property('success', true);
         });
 
         invalid.forEach(function(testVal) {
-            var resolvedContext = assertions.$between.call(testVal);
+            var resolvedContext = assertions.between.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
 
         invalidWhichThrowsError.forEach(function(testVal) {
             function test() {
-                assertions.$between.call(testVal);
+                assertions.between.call(testVal);
             }
             expect(test).to.throw(Error);
         });
@@ -2344,13 +2356,13 @@ describe('$between', function() {
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$between.call(context);
+        var resolvedContext = assertions.between.call(context);
 
         resolvedContext.message.should.be.equal('between.number');
     })
 })
 
-describe('$notBetween', function() {
+describe('notBetween', function() {
     it('should return true if and only if a validated value is a number NOT between range of two defined numbers (including the defined numbers)', function() {
         var valid = [
             {val: 3, filter: [-1, 2]},
@@ -2372,18 +2384,18 @@ describe('$notBetween', function() {
         ];
 
         valid.forEach(function(testVal) {
-            var resolvedContext = assertions.$notBetween.call(testVal);
+            var resolvedContext = assertions.notBetween.call(testVal);
             resolvedContext.should.have.property('success', true);
         });
 
         invalid.forEach(function(testVal, i) {
-            var resolvedContext = assertions.$notBetween.call(testVal);
+            var resolvedContext = assertions.notBetween.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
 
         invalidWhichThrowsError.forEach(function(testVal) {
             function test() {
-                assertions.$between.call(testVal);
+                assertions.between.call(testVal);
             }
             expect(test).to.throw(Error);
         });
@@ -2403,13 +2415,13 @@ describe('$notBetween', function() {
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$notBetween.call(context);
+        var resolvedContext = assertions.notBetween.call(context);
 
         resolvedContext.message.should.be.equal('not.between.number');
     })
 })
 
-describe('$like', function() {
+describe('like', function() {
     it('should behave like sql `LIKE` operator (case sensitive)', function() {
         var valid = [
             {val: 'abcdefgh', filter: '%cdef%'},
@@ -2425,12 +2437,12 @@ describe('$like', function() {
         ];
 
         valid.forEach(function(testVal) {
-            var resolvedContext = assertions.$like.call(testVal);
+            var resolvedContext = assertions.like.call(testVal);
             resolvedContext.should.have.property('success', true);
         });
 
         invalid.forEach(function(testVal, i) {
-            var resolvedContext = assertions.$like.call(testVal);
+            var resolvedContext = assertions.like.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
     })
@@ -2442,41 +2454,41 @@ describe('$like', function() {
             val: 'invalid',
             propPath: 'prop.path',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$like');
+                assertionType.should.be.equal('like');
                 context.attr.should.be.equal('prop.path');
                 context.format.should.be.equal('%test%');
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$like.call(context);
+        var resolvedContext = assertions.like.call(context);
 
-        resolvedContext.message.should.be.equal('$like');
+        resolvedContext.message.should.be.equal('like');
     })
 
     it('should accept an object with `$any` collection of filters in place of `filter`', function() {
         var valid = [
-            {val: 'abcdefgh', filter: {$any: ['%yz%', 'abc%']}},
-            {val: 'abcdefgh', filter: {$any: ['cdef%', '%gh']}},
-            {val: 'abcd', filter: {$any: ['%abcd%']}},
+            {val: 'abcdefgh', filter: {$any: ['%yz%', 'abc%']}, keywordPrefix: '$'},
+            {val: 'abcdefgh', filter: {$any: ['cdef%', '%gh']}, keywordPrefix: '$'},
+            {val: 'abcd', filter: {$any: ['%abcd%']}, keywordPrefix: '$'},
         ];
 
         var invalid = [
-            {val: 'abcdefgh', filter: {$any: ['cdef%', 'test']}},
+            {val: 'abcdefgh', filter: {$any: ['cdef%', 'test']}, keywordPrefix: '$'},
         ];
 
         valid.forEach(function(testVal) {
-            var resolvedContext = assertions.$like.call(testVal);
+            var resolvedContext = assertions.like.call(testVal);
             resolvedContext.should.have.property('success', true);
         });
 
         invalid.forEach(function(testVal, i) {
-            var resolvedContext = assertions.$like.call(testVal);
+            var resolvedContext = assertions.like.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
     })
 })
 
-describe('$notLike', function() {
+describe('notLike', function() {
     it('should bahave like negated sql `LIKE` operator (case sensitive)', function() {
         var valid = [
             {val: 'abcdefgh', filter: '%cDef%'},
@@ -2492,13 +2504,13 @@ describe('$notLike', function() {
 
         valid.forEach(function(testVal) {
             testVal.assertions = assertions;
-            var resolvedContext = assertions.$notLike.call(testVal);
+            var resolvedContext = assertions.notLike.call(testVal);
             resolvedContext.should.have.property('success', true);
         });
 
         invalid.forEach(function(testVal, i) {
             testVal.assertions = assertions;
-            var resolvedContext = assertions.$notLike.call(testVal);
+            var resolvedContext = assertions.notLike.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
     })
@@ -2511,71 +2523,71 @@ describe('$notLike', function() {
             propPath: 'prop.path',
             assertions: assertions,
             message: function(assertionType, context) {
-                assertionType.should.be.equal('not.$like');
+                assertionType.should.be.equal('not.like');
                 context.attr.should.be.equal('prop.path');
                 context.format.should.be.equal('%invalid%');
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$notLike.call(context);
+        var resolvedContext = assertions.notLike.call(context);
 
-        resolvedContext.message.should.be.equal('not.$like');
+        resolvedContext.message.should.be.equal('not.like');
     })
 
     it('should accept an object with `$any` collection of filters in place of `filter`', function() {
         var valid = [
-            {val: 'abcdefgh', filter: {$any: ['cdef%', 'test']}},
+            {val: 'abcdefgh', filter: {$any: ['cdef%', 'test']}, keywordPrefix: '$'},
         ];
 
         var invalid = [
-            {val: 'abcdefgh', filter: {$any: ['%yz%', 'abc%']}},
-            {val: 'abcdefgh', filter: {$any: ['cdef%', '%gh']}},
-            {val: 'abcd', filter: {$any: ['%abcd%']}},
+            {val: 'abcdefgh', filter: {$any: ['%yz%', 'abc%']}, keywordPrefix: '$'},
+            {val: 'abcdefgh', filter: {$any: ['cdef%', '%gh']}, keywordPrefix: '$'},
+            {val: 'abcd', filter: {$any: ['%abcd%']}, keywordPrefix: '$'},
         ];
 
         valid.forEach(function(testVal) {
             testVal.assertions = assertions;
-            var resolvedContext = assertions.$notLike.call(testVal);
+            var resolvedContext = assertions.notLike.call(testVal);
             resolvedContext.should.have.property('success', true);
         });
 
         invalid.forEach(function(testVal, i) {
             testVal.assertions = assertions;
-            var resolvedContext = assertions.$notLike.call(testVal);
+            var resolvedContext = assertions.notLike.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
     })
 })
 
-describe('$iLike', function() {
+describe('iLike', function() {
     it('should behave like sql `LIKE` operator (case INsensetive)', function() {
         var valid = [
-            {val: 'abcdefgh', filter: '%CDEF%'},
-            {val: 'abCdEFgh', filter: 'abC%'},
-            {val: 'abcdefgh', filter: '%efgh'},
+            {val: 'abcdefgh', filter: '%CDEF%', keywordPrefix: '$'},
+            {val: 'abCdEFgh', filter: 'abC%', keywordPrefix: '$'},
+            {val: 'abcdefgh', filter: '%efgh', keywordPrefix: '$'},
         ];
 
         var invalid = [
-            {val: 'abcdefgh', filter: '%cZeF%'},
-            {val: 'yzAbEfGh', filter: '%CdEf%'},
+            {val: 'abcdefgh', filter: '%cZeF%', keywordPrefix: '$'},
+            {val: 'yzAbEfGh', filter: '%CdEf%', keywordPrefix: '$'},
         ];
 
         valid.forEach(function(testVal) {
             testVal.assertions = assertions;
-            var resolvedContext = assertions.$iLike.call(testVal);
+            var resolvedContext = assertions.iLike.call(testVal);
             resolvedContext.should.have.property('success', true);
         });
 
         invalid.forEach(function(testVal, i) {
             testVal.assertions = assertions;
-            var resolvedContext = assertions.$iLike.call(testVal);
+            var resolvedContext = assertions.iLike.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
     })
 
     it('should support a function as `message` option value', function() {
 
-        var messageStub = sinon.stub().returns('$iLike');
+        var messageStub = sinon.stub().returns('iLike');
         var context = {
             filter: '%test%',
             val: 'invalid',
@@ -2583,38 +2595,38 @@ describe('$iLike', function() {
             assertions: assertions,
             message: messageStub
         };
-        var resolvedContext = assertions.$iLike.call(context);
-        messageStub.should.be.calledWith('$iLike', {attr: 'prop.path', format: '%test%', negated: false})
+        var resolvedContext = assertions.iLike.call(context);
+        messageStub.should.be.calledWith('iLike', {attr: 'prop.path', format: '%test%', negated: false})
 
-        resolvedContext.message.should.be.equal('$iLike');
+        resolvedContext.message.should.be.equal('iLike');
     })
 
     it('should accept an object with `$any` collection of filters in place of `filter`', function() {
         var valid = [
-            {val: 'abCdeFgh', filter: {$any: ['%YZ%', 'ABC%']}},
-            {val: 'aBcdEfgh', filter: {$any: ['cDef%', '%gH']}},
-            {val: 'abcD', filter: {$any: ['%aBCd%']}},
+            {val: 'abCdeFgh', filter: {$any: ['%YZ%', 'ABC%']}, keywordPrefix: '$'},
+            {val: 'aBcdEfgh', filter: {$any: ['cDef%', '%gH']}, keywordPrefix: '$'},
+            {val: 'abcD', filter: {$any: ['%aBCd%']}, keywordPrefix: '$'},
         ];
 
         var invalid = [
-            {val: 'abcdEfgH', filter: {$any: ['cDeF%', 'tEst']}},
+            {val: 'abcdEfgH', filter: {$any: ['cDeF%', 'tEst']}, keywordPrefix: '$'},
         ];
 
         valid.forEach(function(testVal) {
             testVal.assertions = assertions;
-            var resolvedContext = assertions.$iLike.call(testVal);
+            var resolvedContext = assertions.iLike.call(testVal);
             resolvedContext.should.have.property('success', true);
         });
 
         invalid.forEach(function(testVal, i) {
             testVal.assertions = assertions;
-            var resolvedContext = assertions.$iLike.call(testVal);
+            var resolvedContext = assertions.iLike.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
     })
 })
 
-describe('$notILike', function() {
+describe('notILike', function() {
     it('should bahave like negated sql `LIKE` operator (case INsensitive)', function() {
         var valid = [
             {val: 'abcdefgh', filter: '%cZeF%'},
@@ -2629,20 +2641,20 @@ describe('$notILike', function() {
 
         valid.forEach(function(testVal) {
             testVal.assertions = assertions;
-            var resolvedContext = assertions.$notILike.call(testVal);
+            var resolvedContext = assertions.notILike.call(testVal);
             resolvedContext.should.have.property('success', true);
         });
 
         invalid.forEach(function(testVal, i) {
             testVal.assertions = assertions;
-            var resolvedContext = assertions.$notILike.call(testVal);
+            var resolvedContext = assertions.notILike.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
     })
 
     it('should support a function as `message` option value', function() {
 
-        var messageStub = sinon.stub().returns('not.$iLike');
+        var messageStub = sinon.stub().returns('not.iLike');
         var context = {
             filter: '%invalid%',
             val: 'invalid',
@@ -2650,38 +2662,38 @@ describe('$notILike', function() {
             assertions: assertions,
             message: messageStub
         };
-        var resolvedContext = assertions.$notILike.call(context);
-        messageStub.should.be.calledWith('not.$iLike', {attr: 'prop.path', format: '%invalid%', negated: false})
+        var resolvedContext = assertions.notILike.call(context);
+        messageStub.should.be.calledWith('not.iLike', {attr: 'prop.path', format: '%invalid%', negated: false})
 
-        resolvedContext.message.should.be.equal('not.$iLike');
+        resolvedContext.message.should.be.equal('not.iLike');
     })
 
     it('should accept an object with `$any` collection of filters in place of `filter`', function() {
         var valid = [
-            {val: 'abcdEfgH', filter: {$any: ['cDeF%', 'tEst']}},
+            {val: 'abcdEfgH', filter: {$any: ['cDeF%', 'tEst']}, keywordPrefix: '$'},
         ];
 
         var invalid = [
-            {val: 'abCdeFgh', filter: {$any: ['%YZ%', 'ABC%']}},
-            {val: 'aBcdEfgh', filter: {$any: ['cDef%', '%gH']}},
-            {val: 'abcD', filter: {$any: ['%aBCd%']}},
+            {val: 'abCdeFgh', filter: {$any: ['%YZ%', 'ABC%']}, keywordPrefix: '$'},
+            {val: 'aBcdEfgh', filter: {$any: ['cDef%', '%gH']}, keywordPrefix: '$'},
+            {val: 'abcD', filter: {$any: ['%aBCd%']}, keywordPrefix: '$'},
         ];
 
         valid.forEach(function(testVal) {
             testVal.assertions = assertions;
-            var resolvedContext = assertions.$notILike.call(testVal);
+            var resolvedContext = assertions.notILike.call(testVal);
             resolvedContext.should.have.property('success', true);
         });
 
         invalid.forEach(function(testVal, i) {
             testVal.assertions = assertions;
-            var resolvedContext = assertions.$notILike.call(testVal);
+            var resolvedContext = assertions.notILike.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
     })
 })
 
-describe('$in', function() {
+describe('in', function() {
     it('should return true if exact validated value is present in given arrray', function() {
         var valid = [
             {val: 'test', filter: ['test', 'adfsd', 'dsafasjk']},
@@ -2697,13 +2709,13 @@ describe('$in', function() {
 
         valid.forEach(function(testVal) {
             testVal.assertions = assertions;
-            var resolvedContext = assertions.$in.call(testVal);
+            var resolvedContext = assertions.in.call(testVal);
             resolvedContext.should.have.property('success', true);
         });
 
         invalid.forEach(function(testVal, i) {
             testVal.assertions = assertions;
-            var resolvedContext = assertions.$in.call(testVal);
+            var resolvedContext = assertions.in.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
     })
@@ -2715,14 +2727,14 @@ describe('$in', function() {
             val: 'prop3',
             propPath: 'prop.path',
             message: function(assertionType, context) {
-                assertionType.should.be.equal('$in');
+                assertionType.should.be.equal('in');
                 context.attr.should.be.equal('prop.path');
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$in.call(context);
+        var resolvedContext = assertions.in.call(context);
 
-        resolvedContext.message.should.be.equal('$in');
+        resolvedContext.message.should.be.equal('in');
     })
 
     it('should return true if validated value exists as enumerable property in given object', function() {
@@ -2741,19 +2753,19 @@ describe('$in', function() {
 
         valid.forEach(function(testVal) {
             testVal.assertions = assertions;
-            var resolvedContext = assertions.$in.call(testVal);
+            var resolvedContext = assertions.in.call(testVal);
             resolvedContext.should.have.property('success', true);
         });
 
         invalid.forEach(function(testVal, i) {
             testVal.assertions = assertions;
-            var resolvedContext = assertions.$in.call(testVal);
+            var resolvedContext = assertions.in.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
     })
 })
 
-describe('$notIn', function() {
+describe('notIn', function() {
     it('should return true if validated value is NOT present in given array', function() {
         var valid = [
             {val: 1, filter: ['1', 'test', '']},
@@ -2769,13 +2781,13 @@ describe('$notIn', function() {
 
         valid.forEach(function(testVal) {
             testVal.assertions = assertions;
-            var resolvedContext = assertions.$notIn.call(testVal);
+            var resolvedContext = assertions.notIn.call(testVal);
             resolvedContext.should.have.property('success', true);
         });
 
         invalid.forEach(function(testVal, i) {
             testVal.assertions = assertions;
-            var resolvedContext = assertions.$notIn.call(testVal);
+            var resolvedContext = assertions.notIn.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
 
@@ -2789,14 +2801,14 @@ describe('$notIn', function() {
             propPath: 'prop.path',
             assertions: assertions,
             message: function(assertionType, context) {
-                assertionType.should.be.equal('not.$in');
+                assertionType.should.be.equal('not.in');
                 context.attr.should.be.equal('prop.path');
                 return assertionType;
             }
         };
-        var resolvedContext = assertions.$notIn.call(context);
+        var resolvedContext = assertions.notIn.call(context);
 
-        resolvedContext.message.should.be.equal('not.$in');
+        resolvedContext.message.should.be.equal('not.in');
     })
 
     it('should return true if validated value does NOT exists as enumerable property in given object', function() {
@@ -2815,13 +2827,13 @@ describe('$notIn', function() {
 
         valid.forEach(function(testVal) {
             testVal.assertions = assertions;
-            var resolvedContext = assertions.$notIn.call(testVal);
+            var resolvedContext = assertions.notIn.call(testVal);
             resolvedContext.should.have.property('success', true);
         });
 
         invalid.forEach(function(testVal, i) {
             testVal.assertions = assertions;
-            var resolvedContext = assertions.$notIn.call(testVal);
+            var resolvedContext = assertions.notIn.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
     })
