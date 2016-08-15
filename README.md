@@ -27,6 +27,11 @@ Features
 * Referencing other schema definitions from within a schema
 * And more! (see Documentation for all available options)
 
+Cons
+----------------------
+The JsonInspector does NOT validate data properties which have matching names with one of the schema definition `keywords` (those data properties are ignored or removed according to settings). This design decision limits universality of the library in exchange for `schema` simplicity and readability. The issue is partialy solved by the `keyword prefix` feature which allows you to dynamically change a prefix string of keywords (which defaults to the `$` character).  
+If this limitation is a deal breaker, consider trying out the [ajv validation library](https://github.com/epoberezkin/ajv).
+
 Resources
 -------------------
 * [Getting Started](https://github.com/fogine/json-inspector/wiki/Getting-started)
