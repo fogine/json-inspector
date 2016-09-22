@@ -36,7 +36,6 @@ module.exports.define = function(name, schema, options) {
 module.exports.Validator            = Validator;
 module.exports.ValidationError      = ValidationError;
 module.exports.ValidationMultiError = ValidationMultiError;
-module.exports.Validator            = Validator;
 module.exports.ValidatorManager     = ValidatorManager;
 module.exports.getExpressInjector   = expressInjectorMiddleware;
 module.exports.getExpressMiddleware = expressMiddleware;
