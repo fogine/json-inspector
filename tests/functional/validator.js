@@ -185,10 +185,10 @@ describe('Validator', function() {
         ];
 
         var self = this;
-        dataCollection.forEach(function(data) {
+        dataCollection.forEach(function(data, index) {
             var validator = self.validator.validate(data);
             validator.should.have.property('success', false);
-            validator.should.have.property('error').that.is.an.instanceof(Error);
+            validator.should.have.property('error').that.is.an.instanceof(Error, 'Index: ' + index);
         })
 
     });
@@ -217,12 +217,12 @@ describe('Validator', function() {
         });
 
         validator.should.have.property('success', true);
-    })
+    });
 
     it('should fail with proper validation message', function() {
         var validator = this.validator.validate({});
         validator.error.message.should.be.equal(this.schema.first_name.$message);
-    })
+    });
 
     it('should process `message` option when its a function and return proper error message', function() {
         var validator = this.validator.validate({
@@ -235,7 +235,7 @@ describe('Validator', function() {
         });
 
         validator.error.message.should.be.equal('isAlpha');
-    })
+    });
 
     it('should fail with proper validation error', function() {
         var validator = this.validator.validate({
@@ -245,7 +245,7 @@ describe('Validator', function() {
 
         var validator = this.validator.validate({});
         validator.should.have.property('error').that.is.an.instanceof(ValidationError);
-    })
+    });
 
     it('should filter out unexpected data from validated data when `filterData` option is true (true=defaul)', function() {
         var data = {
@@ -267,7 +267,7 @@ describe('Validator', function() {
         data.should.not.have.property('someprop');
         data.should.not.have.property('anotherprop');
         data.friends[0].should.not.have.property('unallowedprop');
-    })
+    });
 
     it('should reduce data being validated by data properties defined in `only` array option', function() {
 
@@ -289,7 +289,7 @@ describe('Validator', function() {
         data.should.not.have.property('address'); //address is not included in `only` array option
         validator.should.have.property('success', true);
         validator.should.have.property('error', null);
-    })
+    });
 
     it('should respect `failOnFirstErr` option', function() {
         var data = {
@@ -310,7 +310,7 @@ describe('Validator', function() {
         validator.should.have.property('success', false);
         //only single error should be returned
         validator.should.have.property('error').that.is.an.instanceof(ValidationError);
-    })
+    });
 
     it('should fail on first unexpected data property when `failOnUnexpectedData` option is set', function() {
         var data = {
@@ -331,7 +331,7 @@ describe('Validator', function() {
 
         validator.should.have.property('success', false);
         validator.should.have.property('error').that.is.an.instanceof(ValidationError);
-    })
+    });
 
     it('should sanitize validated data', function() {
 
@@ -352,7 +352,7 @@ describe('Validator', function() {
         data.friends[0].sex.should.be.equal('FEMALE');
         data.bio.should.be.equal('&lt;script src=&quot;&quot;&gt; some info &lt;&#x2F;script&gt;');
         data.should.have.property('name', data.first_name + ' ' + data.last_name);
-    })
+    });
 
     it('should run supported sanitizers defined for top data object', function() {
 
@@ -376,7 +376,7 @@ describe('Validator', function() {
         validator.should.have.property('success', true);
         data.description.should.be.equal('<a>google</a>');
         data.bio.should.be.equal('');
-    })
+    });
 
     it('should respect `nullable` option if set. null data values should be treated as if data would not be sent', function() {
 
@@ -400,7 +400,7 @@ describe('Validator', function() {
 
         validator.validate(data, {$required: true});
         validator.should.have.property('success', false);
-    })
+    });
 });
 
 describe('module.define', function() {
@@ -419,7 +419,7 @@ describe('module.define', function() {
         userValidator.options.should.have.property('failOnFirstErr', true);
 
         userValidator.validatorManager.get('#user_validator').should.be.equal(userValidator);
-    })
+    });
 
     it('should allow to load another registered validator in schema definition', function() {
         var validationSchema = function() {
@@ -438,8 +438,8 @@ describe('module.define', function() {
         });
 
         validator.should.have.property('success', true);
-    })
-})
+    });
+});
 
 describe('`keywordPrefix` option', function() {
     before(function() {
@@ -513,8 +513,8 @@ describe('`keywordPrefix` option', function() {
             validator.should.have.property('success', true, validator.error);
             validator.should.have.property('error', null);
             val.should.be.eql(dataBckup);
-        })
-    })
+        });
+    });
 
     it('should properly recognize `keywordPrefix` => all tests should FAIL', function() {
 
@@ -562,6 +562,102 @@ describe('`keywordPrefix` option', function() {
             validator.should.have.property('success', false, validator.error);
             validator.should.have.property('error').which.is.instanceof(Error);//can be ValidationError / ValidationMultiError
             val.should.be.eql(dataBckup);
-        })
-    })
-})
+        });
+    });
+});
+
+describe('Validator bugfixes', function() {
+
+    describe('bugfix #1', function() {
+        it('should throw a Validator error when you try to pass unsupported argument value to the `$is` assertion in schema definition', function() {
+            var schema = {
+                $is: 'someunsupportedvalue'
+            };
+
+            var validator = new Validator(schema);
+
+            function testcase() {
+                validator.validate('data');
+            }
+
+            expect(testcase).to.throw(ValidatorError);
+        });
+    });
+
+    describe('bugfix #2 - assertions included within `$or` condition which operate on undefined data should be skiped however they should NOT behave as successfully resolved assertion', function() {
+        describe('scenario 1', function() {
+            before(function() {
+                this.schema = {
+                    $required: true,
+                    $or: [{
+                        access_token: {
+                            $is: String,
+                            $hasLengthOf: {min: 1},
+                        },
+                    }, {
+                        refresh_token: {
+                            $is: String,
+                            $hasLengthOf: {min: 1},
+                        },
+                    }],
+                    client_secret:{
+                        $is: String,
+                        $hasLengthOf: {min: 1},
+                    },
+                };
+
+                this.validator = new Validator(this.schema, {filterData:true});
+            });
+
+            it('should pass the validation process and filter data object properties accordingly', function() {
+                var data = {
+                    refresh_token: 'aaaaa',
+                    client_secret: 'sssss'
+                };
+
+                var dataBackup = _.assign({}, data);
+
+                var validator = this.validator.validate(data);
+                validator.should.have.property('success', true);
+                data.should.be.eql(dataBackup);
+            });
+        });
+
+        describe('scenario 2 - different dataset', function() {
+            before(function() {
+                this.schema = {
+                    $required: true,
+                    $or: {
+                        access_token: {
+                            $is: String,
+                            $hasLengthOf: {min: 1},
+                        },
+                        refresh_token: {
+                            $is: String,
+                            $hasLengthOf: {min: 1},
+                        },
+                    },
+                    client_secret:{
+                        $is: String,
+                        $hasLengthOf: {min: 1},
+                    },
+                };
+
+                this.validator = new Validator(this.schema, {filterData: true});
+            });
+
+            it('should pass the validation process and filter data object properties accordingly', function() {
+                var data = {
+                    refresh_token: 'aaaaa',
+                    client_secret: 'sssss'
+                };
+
+                var dataBackup = _.assign({}, data);
+
+                var validator = this.validator.validate(data);
+                validator.should.have.property('success', true);
+                data.should.be.eql(dataBackup);
+            });
+        });
+    });
+});
