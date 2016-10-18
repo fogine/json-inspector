@@ -71,3 +71,7 @@ Tests
 -------------------
 
 `npm run-script tests`
+
+  
+
+**NOTE:** The most of the actuall data validation is handed over to the [chriso validation library](https://github.com/chriso/validator.js).
