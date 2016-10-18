@@ -102,6 +102,32 @@ describe('is', function() {
         resolvedContext.should.have.property('success', false);
     });
 
+    it('should check for a Boolean', function() {
+        var context = {
+            filter: Boolean,
+            val: true
+        };
+
+        var resolvedContext = assertions.is.call(context);
+        resolvedContext.should.have.property('success', true);
+
+        context.filter = 'Boolean';
+        resolvedContext = assertions.is.call(context);
+        resolvedContext.should.have.property('success', true);
+
+        context.val = false;
+        resolvedContext = assertions.is.call(context);
+        resolvedContext.should.have.property('success', true);
+
+        context.val = 'true';
+        resolvedContext = assertions.is.call(context);
+        resolvedContext.should.have.property('success', false);
+
+        context.val = {};
+        resolvedContext = assertions.is.call(context);
+        resolvedContext.should.have.property('success', false);
+    });
+
     it('should check for a null value', function() {
         var context = {
             filter: null,
