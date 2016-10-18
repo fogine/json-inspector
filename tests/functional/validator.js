@@ -3,6 +3,7 @@ var expect               = chai.expect;
 var Validator            = require('../../lib/validator.js');
 var ValidatorManager     = require('../../lib/validatorManager.js');
 var index                = require('../../index.js');
+var ValidatorError       = require('../../lib/error/validatorError.js');
 var ValidationError      = require('../../lib/error/validationError.js');
 var ValidationMultiError = require('../../lib/error/validationMultiError.js');
 var _                    = require('lodash');
@@ -658,6 +659,50 @@ describe('Validator bugfixes', function() {
                 validator.should.have.property('success', true);
                 data.should.be.eql(dataBackup);
             });
+        });
+    });
+
+    describe('bugfix `$required` keyword value should be inherited if not overwriten:', function() {
+        it('should inherit `$reuired` value in `$or` condition and fail the validation process', function() {
+            var schema = {
+                $required: true,
+                $or: [
+                    {
+                        $is: Number
+                    },
+                    {
+                        $is: String
+                    }
+                ]
+            };
+
+            var validator = new Validator(schema);
+            validator.validate(undefined);
+            validator.should.have.property('success', false);
+            validator.should.have.property('error').which.is.instanceof(ValidationError);
+        });
+
+        it('should successfully pass the validation process', function() {
+            var schema = {
+                val: {
+                    $required: true, // val is required but not assertions are defined as required thus it passes
+                    $or: [
+                        {
+                            $required: false,
+                            $is: Number
+                        },
+                        {
+                            $required: false,
+                            $is: String
+                        }
+                    ]
+                }
+            };
+
+            var validator = new Validator(schema);
+            validator.validate({});
+            validator.should.have.property('success', true);
+            validator.should.have.property('error', null);
         });
     });
 });
