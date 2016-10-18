@@ -25,7 +25,7 @@ describe('is', function() {
         context.val = new String('test');
         resolvedContext = assertions.is.call(context);
         resolvedContext.should.have.property('success', false);
-    })
+    });
 
     it('should check for an array', function() {
         var context = {
@@ -47,7 +47,7 @@ describe('is', function() {
         context.val = 'test';
         resolvedContext = assertions.is.call(context);
         resolvedContext.should.have.property('success', false);
-    })
+    });
 
     it('should check for a string', function() {
         var context = {
@@ -74,7 +74,7 @@ describe('is', function() {
         resolvedContext = assertions.is.call(context);
         resolvedContext.should.have.property('success', false);
 
-    })
+    });
 
     it('should check for a number', function() {
         var context = {
@@ -100,9 +100,7 @@ describe('is', function() {
         context.val = {test: 3};
         resolvedContext = assertions.is.call(context);
         resolvedContext.should.have.property('success', false);
-
-
-    })
+    });
 
     it('should check for a null value', function() {
         var context = {
@@ -128,7 +126,7 @@ describe('is', function() {
         context.val = {test: '42'};
         resolvedContext = assertions.is.call(context);
         resolvedContext.should.have.property('success', false);
-    })
+    });
 
     it('should support a function as `message` option value', function() {
         var resolvedContext = assertions.is.call({
@@ -165,7 +163,7 @@ describe('is', function() {
             }
         });
         resolvedContext.message.should.be.equal('is');
-    })
+    });
 
     it('should throw an error when unsupported filter option is given', function() {
         var invalid = [
@@ -185,8 +183,8 @@ describe('is', function() {
             }
             expect(test).to.throw(Error);
         });
-    })
-})
+    });
+});
 
 describe('isAfter', function() {
     beforeEach(function() {
@@ -208,7 +206,7 @@ describe('isAfter', function() {
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.have.been.calledWithExactly(context.val, context.filter);
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -224,7 +222,7 @@ describe('isAfter', function() {
         var resolvedContext = assertions.isAfter.call(context);
 
         resolvedContext.message.should.be.equal('isAfter');
-    })
+    });
 
     it('should replace falsy filter value with `undefined` on extarnal validator method call', function() {
 
@@ -247,8 +245,8 @@ describe('isAfter', function() {
             filter: false,
             val: '2016-09-02'
         }, this.spy);
-    })
-})
+    });
+});
 
 describe('isAlpha', function() {
     beforeEach(function() {
@@ -269,7 +267,7 @@ describe('isAlpha', function() {
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.have.been.calledWithExactly(context.val, context.filter);
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -285,7 +283,7 @@ describe('isAlpha', function() {
         var resolvedContext = assertions.isAlpha.call(context);
 
         resolvedContext.message.should.be.equal('isAlpha');
-    })
+    });
 
     it('should replace falsy filter value with `undefined` on extarnal validator method call', function() {
         shouldTransformFilterValueToUndefined('isAlpha', {
@@ -307,8 +305,8 @@ describe('isAlpha', function() {
             filter: false,
             val: 'abcd'
         }, this.spy);
-    })
-})
+    });
+});
 
 describe('isAlphanumeric', function() {
     beforeEach(function() {
@@ -329,7 +327,7 @@ describe('isAlphanumeric', function() {
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.have.been.calledWithExactly(context.val, context.filter);
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -345,7 +343,7 @@ describe('isAlphanumeric', function() {
         var resolvedContext = assertions.isAlphanumeric.call(context);
 
         resolvedContext.message.should.be.equal('isAlphanumeric');
-    })
+    });
 
     it('should replace falsy filter value with `undefined` on extarnal validator method call', function() {
         shouldTransformFilterValueToUndefined('isAlphanumeric', {
@@ -367,8 +365,8 @@ describe('isAlphanumeric', function() {
             filter:  false,
             val: 'abcd123'
         }, this.spy);
-    })
-})
+    });
+});
 
 describe('isAscii', function() {
     beforeEach(function() {
@@ -388,7 +386,7 @@ describe('isAscii', function() {
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.have.been.calledWithExactly(context.val);
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -402,8 +400,8 @@ describe('isAscii', function() {
         var resolvedContext = assertions.isAscii.call(context);
 
         resolvedContext.message.should.be.equal('isAscii');
-    })
-})
+    });
+});
 
 describe('isBase64', function() {
     beforeEach(function() {
@@ -423,7 +421,7 @@ describe('isBase64', function() {
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.have.been.calledWithExactly(context.val);
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -437,8 +435,8 @@ describe('isBase64', function() {
         var resolvedContext = assertions.isBase64.call(context);
 
         resolvedContext.message.should.be.equal('isBase64');
-    })
-})
+    });
+});
 
 describe('isBefore', function() {
     beforeEach(function() {
@@ -460,7 +458,7 @@ describe('isBefore', function() {
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val, context.filter);
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -476,7 +474,7 @@ describe('isBefore', function() {
         var resolvedContext = assertions.isBefore.call(context);
 
         resolvedContext.message.should.be.equal('isBefore');
-    })
+    });
 
     it('should replace falsy filter value with `undefined` on extarnal validator method call', function() {
         shouldTransformFilterValueToUndefined('isBefore', {
@@ -498,8 +496,8 @@ describe('isBefore', function() {
             filter:  false,
             val: '2016-09-02'
         }, this.spy);
-    })
-})
+    });
+});
 
 describe('isBoolean', function() {
     beforeEach(function() {
@@ -533,7 +531,7 @@ describe('isBoolean', function() {
         var resolvedContext = assertions.isBoolean.call(context);
 
         resolvedContext.message.should.be.equal('isBoolean');
-    })
+    });
 
     it('should coerce string type of validated value before validation is forwarded to the external validator method', function() {
         var context = {
@@ -544,8 +542,8 @@ describe('isBoolean', function() {
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val.toString());
-    })
-})
+    });
+});
 
 describe('hasByteLength', function() {
     beforeEach(function() {
@@ -567,7 +565,7 @@ describe('hasByteLength', function() {
         resolvedContext.should.have.property('success', true, 'hasByteLength returned unexpected unsuccessfull response');
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val, context.filter);
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -584,7 +582,7 @@ describe('hasByteLength', function() {
         var resolvedContext = assertions.hasByteLength.call(context);
 
         resolvedContext.message.should.be.equal('between.byte');
-    })
+    });
 
     it('should replace falsy filter value with `undefined` on extarnal validator method call', function() {
         shouldTransformFilterValueToUndefined('hasByteLength', {
@@ -606,8 +604,8 @@ describe('hasByteLength', function() {
             filter:  false,
             val: 'some-string'
         }, this.spy);
-    })
-})
+    });
+});
 
 describe('isCreditCard', function() {
     beforeEach(function() {
@@ -628,7 +626,7 @@ describe('isCreditCard', function() {
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val);
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -644,8 +642,8 @@ describe('isCreditCard', function() {
         var resolvedContext = assertions.isCreditCard.call(context);
 
         resolvedContext.message.should.be.equal('isCreditCard');
-    })
-})
+    });
+});
 
 describe('isCurrency', function() {
     beforeEach(function() {
@@ -667,7 +665,7 @@ describe('isCurrency', function() {
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val, context.filter);
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -684,7 +682,7 @@ describe('isCurrency', function() {
         var resolvedContext = assertions.isCurrency.call(context);
 
         resolvedContext.message.should.be.equal('isCurrency');
-    })
+    });
 
     it('should replace falsy filter value with `undefined` on extarnal validator method call', function() {
         shouldTransformFilterValueToUndefined('isCurrency', {
@@ -706,8 +704,8 @@ describe('isCurrency', function() {
             filter:  false,
             val: '5'
         }, this.spy);
-    })
-})
+    });
+});
 
 describe('isDataURI', function() {
     beforeEach(function() {
@@ -727,7 +725,7 @@ describe('isDataURI', function() {
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val);
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -743,8 +741,8 @@ describe('isDataURI', function() {
         var resolvedContext = assertions.isDataURI.call(context);
 
         resolvedContext.message.should.be.equal('isDataURI');
-    })
-})
+    });
+});
 
 describe('isDate', function() {
     beforeEach(function() {
@@ -764,7 +762,7 @@ describe('isDate', function() {
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val);
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -780,8 +778,8 @@ describe('isDate', function() {
         var resolvedContext = assertions.isDate.call(context);
 
         resolvedContext.message.should.be.equal('isDate');
-    })
-})
+    });
+});
 
 describe('isDecimal', function() {
     beforeEach(function() {
@@ -801,7 +799,7 @@ describe('isDecimal', function() {
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val);
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -828,8 +826,8 @@ describe('isDecimal', function() {
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val.toString());
-    })
-})
+    });
+});
 
 describe('isDivisibleBy', function() {
     beforeEach(function() {
@@ -850,7 +848,7 @@ describe('isDivisibleBy', function() {
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val, context.filter);
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -868,7 +866,7 @@ describe('isDivisibleBy', function() {
         var resolvedContext = assertions.isDivisibleBy.call(context);
 
         resolvedContext.message.should.be.equal('isDivisibleBy');
-    })
+    });
 
     it('should coerce string type of validated value before validation is forwarded to the external validator method', function() {
         var context = {
@@ -880,8 +878,8 @@ describe('isDivisibleBy', function() {
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val.toString(), context.filter);
-    })
-})
+    });
+});
 
 describe('isEmail', function() {
     beforeEach(function() {
@@ -903,7 +901,7 @@ describe('isEmail', function() {
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val, context.filter);
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -920,7 +918,7 @@ describe('isEmail', function() {
         var resolvedContext = assertions.isEmail.call(context);
 
         resolvedContext.message.should.be.equal('isEmail');
-    })
+    });
 
     it('should replace falsy filter value with `undefined` on extarnal validator method call', function() {
         shouldTransformFilterValueToUndefined('isEmail', {
@@ -942,8 +940,8 @@ describe('isEmail', function() {
             filter:  false,
             val: 'test@test.com'
         }, this.spy);
-    })
-})
+    });
+});
 
 describe('isFQDN', function() {
     beforeEach(function() {
@@ -965,7 +963,7 @@ describe('isFQDN', function() {
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val, context.filter);
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -982,7 +980,7 @@ describe('isFQDN', function() {
         var resolvedContext = assertions.isFQDN.call(context);
 
         resolvedContext.message.should.be.equal('isFQDN');
-    })
+    });
 
     it('should replace falsy filter value with `undefined` on extarnal validator method call', function() {
         shouldTransformFilterValueToUndefined('isFQDN', {
@@ -1004,8 +1002,8 @@ describe('isFQDN', function() {
             filter:  false,
             val: 'mymail.somecollege.edu'
         }, this.spy);
-    })
-})
+    });
+});
 
 describe('isFloat', function() {
     beforeEach(function() {
@@ -1027,7 +1025,7 @@ describe('isFloat', function() {
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val, context.filter);
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -1057,7 +1055,7 @@ describe('isFloat', function() {
         var resolvedContext2 = assertions.isFloat.call(context2);
         resolvedContext2.message.should.be.equal('isFloat');
 
-    })
+    });
 
     it('should replace falsy filter value with `undefined` on extarnal validator method call', function() {
         shouldTransformFilterValueToUndefined('isFloat', {
@@ -1079,7 +1077,7 @@ describe('isFloat', function() {
             filter:  false,
             val: '3.3'
         }, this.spy);
-    })
+    });
 
     it('should coerce string type of validated value before validation is forwarded to the external validator method', function() {
         var context = {
@@ -1091,8 +1089,8 @@ describe('isFloat', function() {
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val.toString(), context.filter);
-    })
-})
+    });
+});
 
 describe('isFullWidth', function() {
     beforeEach(function() {
@@ -1113,7 +1111,7 @@ describe('isFullWidth', function() {
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val);
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -1129,8 +1127,8 @@ describe('isFullWidth', function() {
         var resolvedContext = assertions.isFullWidth.call(context);
 
         resolvedContext.message.should.be.equal('isFullWidth');
-    })
-})
+    });
+});
 describe('isHalfWidth', function() {
     beforeEach(function() {
         this.spy = sinon.spy(stringValidator, 'isHalfWidth');
@@ -1154,7 +1152,7 @@ describe('isHalfWidth', function() {
         var resolvedContext = assertions.isHalfWidth.call(context);
 
         resolvedContext.message.should.be.equal('isHalfWidth');
-    })
+    });
 
     it('should call external `isHalfWidth` validator', function() {
 
@@ -1166,8 +1164,8 @@ describe('isHalfWidth', function() {
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val);
-    })
-})
+    });
+});
 
 describe('isHexColor', function() {
     beforeEach(function() {
@@ -1188,7 +1186,7 @@ describe('isHexColor', function() {
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val);
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -1204,8 +1202,8 @@ describe('isHexColor', function() {
         var resolvedContext = assertions.isHexColor.call(context);
 
         resolvedContext.message.should.be.equal('isHexColor');
-    })
-})
+    });
+});
 
 describe('isHexadecimal', function() {
     beforeEach(function() {
@@ -1226,7 +1224,7 @@ describe('isHexadecimal', function() {
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val);
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -1242,8 +1240,8 @@ describe('isHexadecimal', function() {
         var resolvedContext = assertions.isHexadecimal.call(context);
 
         resolvedContext.message.should.be.equal('isHexadecimal');
-    })
-})
+    });
+});
 
 describe('isIP', function() {
     beforeEach(function() {
@@ -1265,7 +1263,7 @@ describe('isIP', function() {
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val, context.filter);
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -1283,7 +1281,7 @@ describe('isIP', function() {
         var resolvedContext = assertions.isIP.call(context);
 
         resolvedContext.message.should.be.equal('isIP');
-    })
+    });
 
     it('should replace falsy filter value with `undefined` on extarnal validator method call', function() {
         shouldTransformFilterValueToUndefined('isIP', {
@@ -1305,8 +1303,8 @@ describe('isIP', function() {
             filter:  false,
             val: '192.168.0.1'
         }, this.spy);
-    })
-})
+    });
+});
 
 describe('isISBN', function() {
     beforeEach(function() {
@@ -1328,7 +1326,7 @@ describe('isISBN', function() {
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val, context.filter);
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -1346,7 +1344,7 @@ describe('isISBN', function() {
         var resolvedContext = assertions.isISBN.call(context);
 
         resolvedContext.message.should.be.equal('isISBN');
-    })
+    });
 
     it('should replace falsy filter value with `undefined` on extarnal validator method call', function() {
         shouldTransformFilterValueToUndefined('isISBN', {
@@ -1368,8 +1366,8 @@ describe('isISBN', function() {
             filter:  false,
             val: '978-3-16-148410-0'
         }, this.spy);
-    })
-})
+    });
+});
 
 describe('isInt', function() {
     beforeEach(function() {
@@ -1391,7 +1389,7 @@ describe('isInt', function() {
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val, context.filter);
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -1418,7 +1416,7 @@ describe('isInt', function() {
         };
         var resolvedContext2 = assertions.isInt.call(context2);
         resolvedContext2.message.should.be.equal('isInt');
-    })
+    });
 
     it('should replace falsy filter value with `undefined` on extarnal validator method call', function() {
         shouldTransformFilterValueToUndefined('isInt', {
@@ -1435,7 +1433,7 @@ describe('isInt', function() {
             filter:  false,
             val: '15'
         }, this.spy);
-    })
+    });
 
     it('should coerce string type of validated value before validation is forwarded to the external validator method', function() {
         var context = {
@@ -1447,8 +1445,8 @@ describe('isInt', function() {
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val.toString(), context.filter);
-    })
-})
+    });
+});
 
 describe('isJSON', function() {
     beforeEach(function() {
@@ -1469,7 +1467,7 @@ describe('isJSON', function() {
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val);
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -1485,8 +1483,8 @@ describe('isJSON', function() {
         var resolvedContext = assertions.isJSON.call(context);
 
         resolvedContext.message.should.be.equal('isJSON');
-    })
-})
+    });
+});
 
 describe('hasLengthOf', function() {
     beforeEach(function() {
@@ -1508,7 +1506,7 @@ describe('hasLengthOf', function() {
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val, context.filter);
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -1537,7 +1535,7 @@ describe('hasLengthOf', function() {
         };
         var resolvedContext2 = assertions.hasLengthOf.call(context2);
         resolvedContext2.message.should.be.equal('between.array');
-    })
+    });
 
     it('should work with array values', function() {
 
@@ -1596,7 +1594,7 @@ describe('hasLengthOf', function() {
         };
         resolvedContext = assertions.hasLengthOf.call(context);
         resolvedContext.should.have.property('success', false);
-    })
+    });
 
     it('should replace falsy filter value with `undefined` on extarnal validator method call (when validated value is of string type)', function() {
         shouldTransformFilterValueToUndefined('hasLengthOf', {
@@ -1613,8 +1611,8 @@ describe('hasLengthOf', function() {
             filter:  false,
             val: 'test'
         }, this.spy);
-    })
-})
+    });
+});
 
 
 describe('isNumeric', function() {
@@ -1636,7 +1634,7 @@ describe('isNumeric', function() {
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val);
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -1652,8 +1650,8 @@ describe('isNumeric', function() {
         var resolvedContext = assertions.isNumeric.call(context);
 
         resolvedContext.message.should.be.equal('isNumeric');
-    })
-})
+    });
+});
 
 describe('isURL', function() {
     beforeEach(function() {
@@ -1675,7 +1673,7 @@ describe('isURL', function() {
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val, context.filter);
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -1692,7 +1690,7 @@ describe('isURL', function() {
         var resolvedContext = assertions.isURL.call(context);
 
         resolvedContext.message.should.be.equal('isURL');
-    })
+    });
 
     it('should replace falsy filter value with `undefined` on extarnal validator method call', function() {
         shouldTransformFilterValueToUndefined('isURL', {
@@ -1714,8 +1712,8 @@ describe('isURL', function() {
             filter:  false,
             val: 'https://google.com'
         }, this.spy);
-    })
-})
+    });
+});
 
 describe('isUUID', function() {
     beforeEach(function() {
@@ -1737,7 +1735,7 @@ describe('isUUID', function() {
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val, context.filter);
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -1755,7 +1753,7 @@ describe('isUUID', function() {
         var resolvedContext = assertions.isUUID.call(context);
 
         resolvedContext.message.should.be.equal('isUUID');
-    })
+    });
 
     it('should replace falsy filter value with `undefined` on extarnal validator method call', function() {
         shouldTransformFilterValueToUndefined('isUUID', {
@@ -1778,7 +1776,7 @@ describe('isUUID', function() {
             val: '4b94c16f-8b6a-4302-aa36-ac7bd447d690'
         }, this.spy);
     });
-})
+});
 
 describe('matches', function() {
     beforeEach(function() {
@@ -1800,7 +1798,7 @@ describe('matches', function() {
         resolvedContext.should.have.property('success', true);
         this.spy.should.have.been.calledOnce;
         this.spy.should.always.have.been.calledWithExactly(context.val, context.filter);
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -1818,7 +1816,7 @@ describe('matches', function() {
         var resolvedContext = assertions.matches.call(context);
 
         resolvedContext.message.should.be.equal('matches');
-    })
+    });
 
     it('should replace falsy filter value with `undefined` on extarnal validator method call', function() {
         shouldTransformFilterValueToUndefined('matches', {
@@ -1841,7 +1839,7 @@ describe('matches', function() {
             val: '111aaaIII'
         }, this.spy);
     });
-})
+});
 
 describe('isEmpty', function() {
     it('should return true if validated value is one of (null, undefined, "") values', function() {
@@ -1868,7 +1866,7 @@ describe('isEmpty', function() {
             var resolvedContext = assertions.isEmpty.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -1884,8 +1882,8 @@ describe('isEmpty', function() {
         var resolvedContext = assertions.isEmpty.call(context);
 
         resolvedContext.message.should.be.equal('isEmpty');
-    })
-})
+    });
+});
 
 describe('gt', function() {
     it('should return true if and only if provided number value is grater than a number value passed as filter', function() {
@@ -1912,7 +1910,7 @@ describe('gt', function() {
             var resolvedContext = assertions.gt.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -1930,7 +1928,7 @@ describe('gt', function() {
         var resolvedContext = assertions.gt.call(context);
 
         resolvedContext.message.should.be.equal('gt');
-    })
+    });
 
     it('should support an object with reference to another data field which is being validated as filter value', function() {
         var context = {
@@ -1953,7 +1951,7 @@ describe('gt', function() {
         resolvedContext = assertions.gt.call(context);
         resolvedContext.should.have.property('success', true);
     });
-})
+});
 
 describe('gte', function() {
     it('should return true if and only if provided number value is grater than or equal to a number value passed as filter', function() {
@@ -1981,7 +1979,7 @@ describe('gte', function() {
             var resolvedContext = assertions.gte.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -1999,7 +1997,7 @@ describe('gte', function() {
         var resolvedContext = assertions.gte.call(context);
 
         resolvedContext.message.should.be.equal('gte');
-    })
+    });
 
     it('should support an object with reference to another data field which is being validated as filter value', function() {
         var context = {
@@ -2022,7 +2020,7 @@ describe('gte', function() {
         resolvedContext = assertions.gte.call(context);
         resolvedContext.should.have.property('success', true);
     });
-})
+});
 
 describe('lt', function() {
     it('should return true if and only if provided number value is lower than a number value passed as filter', function() {
@@ -2049,7 +2047,7 @@ describe('lt', function() {
             var resolvedContext = assertions.lt.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -2067,7 +2065,7 @@ describe('lt', function() {
         var resolvedContext = assertions.lt.call(context);
 
         resolvedContext.message.should.be.equal('lt');
-    })
+    });
 
     it('should support an object with reference to another data field which is being validated as filter value', function() {
         var context = {
@@ -2090,7 +2088,7 @@ describe('lt', function() {
         resolvedContext = assertions.lt.call(context);
         resolvedContext.should.have.property('success', true);
     });
-})
+});
 
 describe('lte', function() {
     it('should return true if and only if provided number value is lower than or equal to a number value passed as filter', function() {
@@ -2118,7 +2116,7 @@ describe('lte', function() {
             var resolvedContext = assertions.lte.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -2136,7 +2134,7 @@ describe('lte', function() {
         var resolvedContext = assertions.lte.call(context);
 
         resolvedContext.message.should.be.equal('lte');
-    })
+    });
 
     it('should support an object with reference to another data field which is being validated as filter value', function() {
         var context = {
@@ -2159,7 +2157,7 @@ describe('lte', function() {
         resolvedContext = assertions.lte.call(context);
         resolvedContext.should.have.property('success', true);
     });
-})
+});
 
 describe('eq', function() {
     it('should return true if and only if provided number value is equal to a number value passed as filter', function() {
@@ -2190,7 +2188,7 @@ describe('eq', function() {
             var resolvedContext = assertions.eq.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -2208,7 +2206,7 @@ describe('eq', function() {
         var resolvedContext = assertions.eq.call(context);
 
         resolvedContext.message.should.be.equal('eq');
-    })
+    });
 
     it('should support an object with reference to another data field which is being validated as filter value', function() {
         var context = {
@@ -2231,7 +2229,7 @@ describe('eq', function() {
         resolvedContext = assertions.eq.call(context);
         resolvedContext.should.have.property('success', true);
     });
-})
+});
 
 describe('ne', function() {
     it('should return true if and only if provided number value is not equal to a number value passed as filter', function() {
@@ -2260,7 +2258,7 @@ describe('ne', function() {
             var resolvedContext = assertions.ne.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -2278,7 +2276,7 @@ describe('ne', function() {
         var resolvedContext = assertions.ne.call(context);
 
         resolvedContext.message.should.be.equal('ne');
-    })
+    });
 
     it('should support an object with reference to another data field which is being validated as filter value', function() {
         var context = {
@@ -2301,7 +2299,7 @@ describe('ne', function() {
         resolvedContext = assertions.ne.call(context);
         resolvedContext.should.have.property('success', true);
     });
-})
+});
 
 describe('between', function() {
     it('should return true if and only if a validated value is a number between range of two defined numbers (including the defined numbers)', function() {
@@ -2340,7 +2338,7 @@ describe('between', function() {
             }
             expect(test).to.throw(Error);
         });
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -2359,8 +2357,8 @@ describe('between', function() {
         var resolvedContext = assertions.between.call(context);
 
         resolvedContext.message.should.be.equal('between.number');
-    })
-})
+    });
+});
 
 describe('notBetween', function() {
     it('should return true if and only if a validated value is a number NOT between range of two defined numbers (including the defined numbers)', function() {
@@ -2399,7 +2397,7 @@ describe('notBetween', function() {
             }
             expect(test).to.throw(Error);
         });
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -2418,8 +2416,8 @@ describe('notBetween', function() {
         var resolvedContext = assertions.notBetween.call(context);
 
         resolvedContext.message.should.be.equal('not.between.number');
-    })
-})
+    });
+});
 
 describe('like', function() {
     it('should behave like sql `LIKE` operator (case sensitive)', function() {
@@ -2445,7 +2443,7 @@ describe('like', function() {
             var resolvedContext = assertions.like.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -2463,7 +2461,7 @@ describe('like', function() {
         var resolvedContext = assertions.like.call(context);
 
         resolvedContext.message.should.be.equal('like');
-    })
+    });
 
     it('should accept an object with `$any` collection of filters in place of `filter`', function() {
         var valid = [
@@ -2485,8 +2483,8 @@ describe('like', function() {
             var resolvedContext = assertions.like.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
-    })
-})
+    });
+});
 
 describe('notLike', function() {
     it('should bahave like negated sql `LIKE` operator (case sensitive)', function() {
@@ -2513,7 +2511,7 @@ describe('notLike', function() {
             var resolvedContext = assertions.notLike.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -2532,7 +2530,7 @@ describe('notLike', function() {
         var resolvedContext = assertions.notLike.call(context);
 
         resolvedContext.message.should.be.equal('not.like');
-    })
+    });
 
     it('should accept an object with `$any` collection of filters in place of `filter`', function() {
         var valid = [
@@ -2556,8 +2554,8 @@ describe('notLike', function() {
             var resolvedContext = assertions.notLike.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
-    })
-})
+    });
+});
 
 describe('iLike', function() {
     it('should behave like sql `LIKE` operator (case INsensetive)', function() {
@@ -2583,7 +2581,7 @@ describe('iLike', function() {
             var resolvedContext = assertions.iLike.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -2599,7 +2597,7 @@ describe('iLike', function() {
         messageStub.should.be.calledWith('iLike', {attr: 'prop.path', format: '%test%', negated: false})
 
         resolvedContext.message.should.be.equal('iLike');
-    })
+    });
 
     it('should accept an object with `$any` collection of filters in place of `filter`', function() {
         var valid = [
@@ -2623,8 +2621,8 @@ describe('iLike', function() {
             var resolvedContext = assertions.iLike.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
-    })
-})
+    });
+});
 
 describe('notILike', function() {
     it('should bahave like negated sql `LIKE` operator (case INsensitive)', function() {
@@ -2650,7 +2648,7 @@ describe('notILike', function() {
             var resolvedContext = assertions.notILike.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -2666,7 +2664,7 @@ describe('notILike', function() {
         messageStub.should.be.calledWith('not.iLike', {attr: 'prop.path', format: '%invalid%', negated: false})
 
         resolvedContext.message.should.be.equal('not.iLike');
-    })
+    });
 
     it('should accept an object with `$any` collection of filters in place of `filter`', function() {
         var valid = [
@@ -2690,8 +2688,8 @@ describe('notILike', function() {
             var resolvedContext = assertions.notILike.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
-    })
-})
+    });
+});
 
 describe('in', function() {
     it('should return true if exact validated value is present in given arrray', function() {
@@ -2718,7 +2716,7 @@ describe('in', function() {
             var resolvedContext = assertions.in.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -2735,7 +2733,7 @@ describe('in', function() {
         var resolvedContext = assertions.in.call(context);
 
         resolvedContext.message.should.be.equal('in');
-    })
+    });
 
     it('should return true if validated value exists as enumerable property in given object', function() {
         var valid = [
@@ -2762,8 +2760,8 @@ describe('in', function() {
             var resolvedContext = assertions.in.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
-    })
-})
+    });
+});
 
 describe('notIn', function() {
     it('should return true if validated value is NOT present in given array', function() {
@@ -2791,7 +2789,7 @@ describe('notIn', function() {
             resolvedContext.should.have.property('success', false);
         });
 
-    })
+    });
 
     it('should support a function as `message` option value', function() {
 
@@ -2809,7 +2807,7 @@ describe('notIn', function() {
         var resolvedContext = assertions.notIn.call(context);
 
         resolvedContext.message.should.be.equal('not.in');
-    })
+    });
 
     it('should return true if validated value does NOT exists as enumerable property in given object', function() {
         var valid = [
@@ -2836,8 +2834,8 @@ describe('notIn', function() {
             var resolvedContext = assertions.notIn.call(testVal);
             resolvedContext.should.have.property('success', false);
         });
-    })
-})
+    });
+});
 
 /**
  * shouldTransformFilterValueToUndefined
