@@ -45,14 +45,17 @@ module.exports.validators           = assertions;
 module.exports.sanitizers           = sanitizers;
 
 },{"./lib/assertions.js":2,"./lib/composeError.js":3,"./lib/conditions.js":4,"./lib/error/validationError.js":5,"./lib/error/validationMultiError.js":6,"./lib/expressInjectorMiddleware.js":12,"./lib/expressMiddleware.js":12,"./lib/sanitizers.js":9,"./lib/validator.js":10,"./lib/validatorManager.js":11,"validator":79}],2:[function(require,module,exports){
-var stringValidator  = require('validator');
-var _  = require('lodash');
+var _               = require('lodash');
+var stringValidator = require('validator');
+
+ValidatorError = require('./error/validatorError.js');
 
 var isMap = {};
 isMap[Object] = 'Object';
 isMap[Array]  = 'Array';
 isMap[String] = 'String';
 isMap[Number] = 'Number';
+isMap[Boolean]= 'Boolean';
 isMap[null]   = 'null';
 
 var assertions = module.exports = {
@@ -63,13 +66,14 @@ var assertions = module.exports = {
             this.success = this.val instanceof Array;
         } else if (this.filter === String || this.filter === isMap[String]) {
             this.success = this.val instanceof String || typeof this.val === 'string';
+        } else if (this.filter === Boolean || this.filter === isMap[Boolean]) {
+            this.success = this.val instanceof Boolean || typeof this.val === 'boolean';
         } else if (this.filter === Number || this.filter === isMap[Number]) {
             this.success = this.val instanceof Number || typeof this.val === 'number';
         } else if (this.filter === null) {
             this.success = this.val === null;
         } else {
-            //TODO - proper error object
-            throw new Error('Invalid `is` assertion option value');
+            throw new ValidatorError('Invalid `is` assertion option value');
         }
 
         transformErrMessage.call(this, function(context) {
@@ -1114,7 +1118,7 @@ function minMaxOrBoth(def, opt, context) {
     return out;
 }
 
-},{"lodash":41,"validator":79}],3:[function(require,module,exports){
+},{"./error/validatorError.js":7,"lodash":41,"validator":79}],3:[function(require,module,exports){
 var sanitizers = require('./sanitizers.js');
 
 /*
@@ -1217,7 +1221,7 @@ function and(opt) {
                 if (this.options.failOnFirstErr === true) {
                     return this;
                 }
-            } else {
+            } else if(assertion.success !== null) {
                 if (typeof assertion.onSuccess === 'function') {
                     hooks.push(assertion);
                 }
@@ -1252,6 +1256,7 @@ function or(opt) {
     return function() {
         var assertions = this.pool;
         var numOfGenericErrors = 0;
+        var numOfNullAssertions = 0;
 
         for (var i = 0, len = assertions.length; i < len; i++) {
 
@@ -1270,8 +1275,10 @@ function or(opt) {
                 }
 
                 return this;
-                //TODO errors for or conditions must be handled differently, now
-                //only first error is showed... how to solve this?
+            } else if (assertion.success === null) {
+                numOfNullAssertions++;
+            //TODO errors for or conditions must be handled differently, now
+            //only first error is showed... how to solve this?
             } else if (!numOfGenericErrors) {
                 if (assertion.hasOwnProperty('errors')) {
                     this.errors.push(assertion.errors);
@@ -1287,7 +1294,11 @@ function or(opt) {
             }
         }
 
-        this.success = false;
+        if (numOfNullAssertions == assertions.length) {
+            this.success = null; // no assertions against the data were made
+        } else {
+            this.success = false;
+        }
         return this;
     }
 }
@@ -1578,6 +1589,10 @@ Validator.prototype.validate = function(data, customSchema, options) {
     var report =  this.build(data, schema, options, data, null, this.dataTree)();
     report.errors = _.flattenDeep(report.errors);
 
+    if (report.success === null) { // no assertions have been made
+        report.success = true;
+    }
+
     this.error = this._transformErrors(report.errors, options);
     this.pool = report.pool;
     this.success = report.success;
@@ -1736,7 +1751,7 @@ Validator.prototype.buildCondition = function(pool, condType, options) {
 
     return function bulkAssert() {
         if (!context.pool.length) {
-            context.success = true;
+            context.success = null; //we don't have any assertions to make
             return context;
         }
         return conditions[condType].call(context);
@@ -1769,6 +1784,9 @@ Validator.prototype.buildAssertion = function(val, filterValue, assertType, opti
         try {
             return assertions[assertType].call(context);
         } catch(e) {
+            if (e instanceof ValidatorError) {
+                throw e;
+            }
             context.success = context.negated ? true : false;
             return context;
         }
@@ -1860,8 +1878,12 @@ Validator.prototype.build = function(data, where, options, parentDataObj, parent
                 var subPool = [];
                 where[prefixedProp].forEach(function(subWhere) {
                     var opt = _.assign({}, options, {
-                        required: subWhere.hasOwnProperty(keywordPrefix + 'required') ? subWhere.required : options.required,
-                        message: subWhere.message || options.message
+                        required: where.hasOwnProperty(requiredKeyword) ?
+                            where[requiredKeyword] :
+                                subWhere.hasOwnProperty(requiredKeyword) ?
+                                subWhere[requiredKeyword] :
+                                options.required,
+                        message: subWhere[messageKeyword] || options.message
                     });
                     subPool.push(self.build(data, subWhere, opt, parentDataObj, parentProp, parentTreeObj));
                 });
@@ -1869,12 +1891,12 @@ Validator.prototype.build = function(data, where, options, parentDataObj, parent
             } else if(_.isPlainObject(where[prefixedProp])) {
                 var opt = _.assign({}, options, {
                     comparisonOperator: prop,
-                    required: where[prefixedProp].hasOwnProperty(keywordPrefix + 'required') ? where[prefixedProp].required : options.required,
-                    message: where[prefixedProp].message || where.message || options.message
+                    required: where[prefixedProp].hasOwnProperty(requiredKeyword) ? where[prefixedProp][requiredKeyword] : options.required,
+                    message: where[prefixedProp][messageKeyword] || where[messageKeyword] || options.message
                 });
                 pool.push(self.build(data, where[prefixedProp], opt, parentDataObj, parentProp, parentTreeObj));
             }
-        } else if (prop === 'message' || prop === 'required') {
+        } else if (['message', 'required', 'nullable'].indexOf(prop) !== -1) {
             return;
         } else if (prop === 'forEach') {// yields new pool of assertions for every item of an array
             var fun = self.buildArrayCondition(prefixedProp, data, where, options, parentTreeObj);
@@ -1885,8 +1907,8 @@ Validator.prototype.build = function(data, where, options, parentDataObj, parent
         // yields new pool of assertions
         } else if (_.isPlainObject(where[prefixedProp]) )  {
 
-            var required = where.hasOwnProperty(keywordPrefix + 'required') ? where.required : options.required;
-            var nullable = where.hasOwnProperty(keywordPrefix + 'nullable') ? where.nullable : options.nullable;
+            var required = where.hasOwnProperty(requiredKeyword) ? where[requiredKeyword] : options.required;
+            var nullable = where.hasOwnProperty(nullableKeyword) ? where[nullableKeyword] : options.nullable;
 
             if (required !== true) {
                 if (data === undefined) return;
@@ -1897,11 +1919,17 @@ Validator.prototype.build = function(data, where, options, parentDataObj, parent
                 }
             }
 
-            if (!objectAssertionWrapperPool.length) {
+            //
+            var fun = self.buildObjectCondition(prefixedProp, data, where, options, parentTreeObj);
+            if (fun instanceof Function) {
+                pool.push(fun);
+            }
+
+            if (!objectAssertionWrapperPool.length && (pool.length || required)) {
                 objectAssertionWrapperPool.push( self.buildAssertion(data, Object, 'is', {
                     propPath: options.propPath,
                     keywordPrefix: options.keywordPrefix,
-                    message: where.message || options.message,
+                    message: where[messageKeyword] || options.message,
                     parentTreeObj: parentTreeObj
                 }));
                 //this is faster way than defining "onSuccess" callback which would
@@ -1912,19 +1940,13 @@ Validator.prototype.build = function(data, where, options, parentDataObj, parent
                     }
                 }
             }
-
-            //
-            var fun = self.buildObjectCondition(prefixedProp, data, where, options, parentTreeObj);
-            if (fun instanceof Function) {
-                pool.push(fun);
-            }
         }
     });
 
     //return condition fn
     var cond = self.buildCondition(pool, options.comparisonOperator, options);
 
-    if (objectAssertionWrapperPool.length) {
+    if (objectAssertionWrapperPool.length && (pool.length || options.required)) {
         objectAssertionWrapperPool.push(cond);
         return self.buildCondition(objectAssertionWrapperPool, 'and', options);
     }
@@ -1996,7 +2018,7 @@ Validator.prototype.buildObjectCondition = function(prop, data, where, options, 
     //validate property of an object
     required = where[prop].hasOwnProperty(requiredKeyword) ? where[prop][requiredKeyword] : required;
 
-    if (_.isPlainObject(data)) {
+    if ( _.isPlainObject(data) && (data.hasOwnProperty(prop) || required )) {
         var opt = _.assign({}, options, {
             propPath      : path,
             required      : required,
@@ -2021,16 +2043,24 @@ Validator.prototype.buildArrayCondition = function(prop, data, where, options, p
     var keywordPrefix = options.keywordPrefix;
     var requiredKeyword = keywordPrefix + 'required';
     var messageKeyword = keywordPrefix + 'message';
+    var nullableKeyword = keywordPrefix + 'nullable';
 
-    if (options.required === false && data === undefined) {
-        return;
+    var nullable = where.hasOwnProperty(nullableKeyword) ? where[nullableKeyword] : options.nullable;
+
+    if (options.required !== true) {
+        if (data === undefined) return;
+
+        if (nullable === true && data === null) {
+            _.set(parentTreeObj, options.propPath, []);
+            return;
+        }
     }
     var required = where[prop].hasOwnProperty(requiredKeyword) ? where[prop][requiredKeyword] : options.required;
 
     andCondPool.push( this.buildAssertion(data, Array, 'is', {
         propPath: options.propPath,
         keywordPrefix: options.keywordPrefix,
-        message: where[requiredKeyword] || options.message
+        message: where[messageKeyword] || options.message
     }));
     _.set(parentTreeObj, options.propPath, []);
 
