@@ -10,7 +10,6 @@ Installation
 
 ... or you can `browserify` your own bundle for a browser, see `npm run-script build` in the `package.json`
 
-
 Features
 ----------------------
 * Complex data structures validation & sanitization
@@ -22,11 +21,6 @@ Features
 * [Express](http://expressjs.com/) support
 * Referencing other schema definitions from within a schema
 * And more! (see Documentation for all available options)
-
-Cons
-----------------------
-The JsonInspector can't validate object's properties which have matching names with one of the schema definition `keywords` (those data properties are ignored or removed according to settings). This intentional design decision limits universality of the library in exchange for improved `schema` readability and simplicity (less code). The issue is partialy solved by the `keyword prefix` feature which allows you to dynamically change a prefix string of keywords (which defaults to the `$` character). In practice, you most probably won't ecnouter this limitation (if you were to, you would have known by now).   
-If this limitation is a deal breaker, consider trying out the [ajv validation library](https://github.com/epoberezkin/ajv).
 
 Resources
 -------------------
@@ -66,6 +60,12 @@ inspector.define('user', {
     }
 });
 ```
+
+Cons
+----------------------
+The JsonInspector can't validate object's properties which have matching names with one of the schema definition `keywords` (those data properties are removed by default). This intentional design decision limits universality of the library in exchange for improved `schema` readability and simplicity (less code). The issue is partialy solved by the `keyword prefix` feature which allows you to dynamically change a prefix string of keywords (which defaults to the `$` character). In practice, you most probably won't ecnouter this limitation (if you were to, you would have known by now).   
+If this limitation is a deal breaker, consider trying out the [ajv validation library](https://github.com/epoberezkin/ajv).
+
 
 Tests
 -------------------
