@@ -19,7 +19,7 @@ describe('expressInjectorMiddleware', function() {
 
         var middleware = expressInjectorMiddleware({});
         middleware.should.be.an.instanceof(Function);
-        middleware.should.have.property('validatorManager').that.is.an.instanceof(ValidatorManager);
+        //middleware.should.have.property('validatorManager').that.is.an.instanceof(ValidatorManager);
     })
 
     it('should register provided customAssertions (overwrite already defined assertion if it already exists)', function() {
@@ -75,8 +75,8 @@ describe('expressInjectorMiddleware', function() {
             var next = function() {};
             middleware(req, res, next);
 
-            middleware.validatorManager.get('#user_validator').should.be.an.instanceof(Validator);
-            middleware.validatorManager.get('#file_validator').should.be.an.instanceof(Validator);
+            req.validatorManager.get('#user_validator').should.be.an.instanceof(Validator);
+            req.validatorManager.get('#file_validator').should.be.an.instanceof(Validator);
         })
 
         it('should bind `validator` object to `req` object', function() {
@@ -104,7 +104,7 @@ describe('expressInjectorMiddleware', function() {
 
                 this.req = req;
                 this.res = res;
-                this.validatorManager = middleware.validatorManager;
+                this.validatorManager = req.validatorManager;
             })
 
             describe('req.validator.define', function() {

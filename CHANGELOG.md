@@ -1,3 +1,8 @@
+#### v1.0.0-rc.2
+
+* [FIXED] Don't assume 'toString' method is present on validated value. (Eg.: node-querystring parser does not include Object.prototype on parsed values)
+* [FIXED] Express support - `getExpressInjector` - Don't share `ValidarManager` object between individual http requests
+
 #### v1.0.0-rc.1
 
 * [ADDED] new `$is: Boolean` option
