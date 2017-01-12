@@ -1,3 +1,7 @@
+#### FUTURE
+
+* [FIXED] global variable `ValidatorError` leak in lib/assertions.js
+
 #### v1.0.0-rc.2
 
 * [FIXED] Don't assume 'toString' method is present on validated value. (Eg.: node-querystring parser does not include Object.prototype on parsed values)
