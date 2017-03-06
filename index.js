@@ -42,3 +42,4 @@ module.exports.getExpressMiddleware = expressMiddleware;
 module.exports.error                = composeError;
 module.exports.validators           = assertions;
 module.exports.sanitizers           = sanitizers;
+module.exports.conditions           = conditions;

@@ -1,6 +1,7 @@
 #### FUTURE
 
 * [FIXED] global variable `ValidatorError` leak in lib/assertions.js
+* [ADDED] export `conditions` submodule out of th  module
 
 #### v1.0.0-rc.2
 
