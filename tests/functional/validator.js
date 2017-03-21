@@ -442,6 +442,63 @@ describe('module.define', function() {
     });
 });
 
+describe('$forOwn assertion', function() {
+    before(function() {
+        this.schema = {
+            $required: true,
+            $forOwn: {
+                $isEmail: null
+            }
+        };
+    });
+    it('should pass the validation process', function() {
+
+        var data = {
+            david: 'david@email.com',
+            john: 'john@email.com',
+            kate: 'kate@email.com'
+        };
+
+        var dataBackup = _.cloneDeep(data);
+
+        var validator = new Validator(this.schema);
+
+        validator.validate(data);
+
+        validator.success.should.be.equal(true);
+        expect(validator.error).to.be.equal(null);
+        data.should.be.eql(dataBackup);
+    });
+
+    it('should fail the validation process', function() {
+        var data = {
+            david: 'david@email.com',
+            john: 'john@email.com',
+            kate: 'kateemail.com' // invalid
+        };
+
+        var dataBackup = _.cloneDeep(data);
+
+        var validator = new Validator(this.schema);
+
+        validator.validate(data);
+
+        validator.success.should.be.equal(false);
+        validator.error.should.be.instanceof(ValidationError);
+        data.should.be.eql(dataBackup);
+    });
+
+    it('should fail the validation process (2)', function() {
+        var data = [];
+
+        var validator = new Validator(this.schema);
+        validator.validate(data);
+
+        validator.success.should.be.equal(false);
+        validator.error.should.be.instanceof(ValidationError);
+    });
+});
+
 describe('`keywordPrefix` option', function() {
     before(function() {
         this.schema = {
