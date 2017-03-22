@@ -451,6 +451,7 @@ describe('$forOwn assertion', function() {
             }
         };
     });
+
     it('should pass the validation process', function() {
 
         var data = {

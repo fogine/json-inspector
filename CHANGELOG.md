@@ -1,5 +1,7 @@
 #### FUTURE
 
+* [ADDED] `$forOwn` keyword - iterates through object's own property values
+* [FIXED] issue with the `_.set` method of `lodash@4.12.2` - the lodash version broke compatibility with previous versions. According to lodash/lodash#3069 the issue won't be fixed.
 * [FIXED] global variable `ValidatorError` leak in lib/assertions.js
 * [ADDED] export `conditions` submodule out of th  module
 
